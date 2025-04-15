@@ -5,13 +5,15 @@ import { ModeToggle } from "@/components/theme-toggle"
 import Link from "next/link"
 import { VenueCarousel } from "@/components/venue-carousel"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar, Users, MapPin } from "lucide-react"
+import { Calendar, Users, MapPin, LogIn } from "lucide-react"
 import { DrinkModal } from "@/components/drink-modal"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
+import Logo from "@/components/logo";
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [hasShownModal, setHasShownModal] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,34 +40,40 @@ export default function Home() {
       <header className="w-full bg-secondary-background border-b-2 border-border p-4">
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-2xl sm:text-3xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1 text-xl sm:text-2xl">🌆</span>
-            </div>
-          </div>
+         <Logo/>
 
-          {/* Right side buttons - hidden on mobile */}
-          <div className="hidden sm:flex items-center gap-4">
-            <Button variant="neutral" size="sm">Sign In</Button>
-            <ModeToggle />
-          </div>
-
-          {/* Mobile menu button - shown only on mobile */}
-          <div className="sm:hidden">
-            <Button variant="neutral" size="icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
+          {/* Right side buttons */}
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="neutral" 
+              size="sm"
+              onClick={() => router.push("/questionnaire")}
+            >
+              <LogIn className="w-4 h-4 mr-2" />
+              Sign In
             </Button>
+            <ModeToggle />
           </div>
         </div>
       </header>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="sm:hidden fixed inset-0 bg-background/95 z-50">
+          <div className="flex flex-col items-center justify-center h-full gap-4 p-4">
+            <Button variant="neutral" size="lg" className="w-full">Sign In</Button>
+            <ModeToggle />
+            <Button 
+              variant="neutral" 
+              size="lg" 
+              className="w-full"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Close Menu
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="w-full py-20 px-4 text-center bg-gradient-to-b from-background to-secondary-background">
@@ -235,14 +243,8 @@ export default function Home() {
       <footer className="w-full bg-secondary-background border-t-2 border-border p-4 sm:p-6">
         <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-lg sm:text-xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1">🌆</span>
-            </div>
-            <span className="text-sm sm:text-base">© 2025 After5.nyc</span>
+           <Logo/>
+            <span className="text-sm sm:text-base text-foreground/60">© 2025</span>
           </div>
           <div className="flex gap-2 sm:gap-4">
             <Button variant="neutral" className="text-sm sm:text-base" asChild>
