@@ -149,8 +149,10 @@ export default function CheckoutPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-col gap-4">
-                <Button size="lg" className="w-full">
-                  Complete Booking
+                <Button size="lg" className="w-full" asChild>
+                  <Link href="/dashboard">
+                    Complete Booking
+                  </Link>
                 </Button>
                 <Button variant="neutral" size="lg" className="w-full" asChild>
                   <Link href="/questionnaire/results">

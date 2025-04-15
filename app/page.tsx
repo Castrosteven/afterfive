@@ -47,8 +47,10 @@ export default function Home() {
             <p className="text-lg sm:text-xl max-w-2xl mb-6 sm:mb-8">
               Connect with like-minded professionals in NYC who know how to unwind after a long day at work.
             </p>
-            <Button size="lg" className="animate-bounce w-full sm:w-auto">
-              Get Started
+            <Button size="lg" className="w-full sm:w-auto" asChild>
+              <Link href="/questionnaire">
+                Find Your Perfect Match
+              </Link>
             </Button>
           </div>
           <div className="flex-1 w-full order-1 md:order-2">
