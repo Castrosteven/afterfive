@@ -3,8 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/theme-toggle"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 import { Phone, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Logo from "@/components/logo"
@@ -25,7 +24,7 @@ export default function PhoneVerificationPage() {
         <Card className="w-full max-w-md bg-secondary-background border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
           <CardHeader>
             <Button
-              
+              variant="neutral"
               className="absolute left-4 top-4 p-2 hover:bg-background"
               asChild
             >
@@ -38,38 +37,47 @@ export default function PhoneVerificationPage() {
           <CardContent className="space-y-4">
             {/* Phone Input */}
             <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/60" />
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  className="pl-10 bg-background border-2 border-border"
-                />
-              </div>
-            </div>
-
-            {/* Verification Code Input */}
-            <div className="space-y-2">
-              <Label htmlFor="code">Verification Code</Label>
-              <div className="grid grid-cols-6 gap-2">
-                {[...Array(6)].map((_, i) => (
-                  <Input
-                    key={i}
-                    id={`code-${i}`}
-                    type="text"
-                    maxLength={1}
-                    className="text-center bg-background border-2 border-border"
-                  />
-                ))}
+                <InputOTP
+                  maxLength={6}
+                  className="w-full justify-center"
+                  containerClassName="group flex items-center has-[:disabled]:opacity-50"
+                >
+                  <InputOTPGroup className="flex gap-2">
+                    <InputOTPSlot
+                      index={0}
+                      className="w-12 h-12 text-2xl border-2 border-border bg-background"
+                    />
+                    <InputOTPSlot
+                      index={1}
+                      className="w-12 h-12 text-2xl border-2 border-border bg-background"
+                    />
+                    <InputOTPSlot
+                      index={2}
+                      className="w-12 h-12 text-2xl border-2 border-border bg-background"
+                    />
+                    <InputOTPSlot
+                      index={3}
+                      className="w-12 h-12 text-2xl border-2 border-border bg-background"
+                    />
+                    <InputOTPSlot
+                      index={4}
+                      className="w-12 h-12 text-2xl border-2 border-border bg-background"
+                    />
+                    <InputOTPSlot
+                      index={5}
+                      className="w-12 h-12 text-2xl border-2 border-border bg-background"
+                    />
+                  </InputOTPGroup>
+                </InputOTP>
               </div>
             </div>
 
             {/* Resend Code */}
             <div className="text-center text-sm text-foreground/60">
               Didn&apos;t receive a code?{" "}
-              <Button className="p-0 h-auto text-main hover:underline">
+              <Button variant="neutral" className="p-0 h-auto text-main hover:underline">
                 Resend
               </Button>
             </div>

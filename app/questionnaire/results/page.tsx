@@ -1,31 +1,95 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ModeToggle } from "@/components/theme-toggle"
 import { 
   MapPin,
-  Calendar,
-  Clock,
   Users,
-  Wine
+  Building2,
+  Beer,
+  Martini,
+  CalendarDays,
+  MessageSquareMore,
+  LogIn,
+  Loader2
 } from "lucide-react"
+import Logo from "@/components/logo"
+
+// Mock data for matches
+const mockMatches = [
+  {
+    id: 1,
+    name: "The Perfect Spot",
+    description: "A cozy venue that matches all your preferences",
+    location: "Lower East Side",
+    time: "Friday, 7-9 PM",
+    groupSize: "25-30 people",
+    topics: "Tech & Business",
+    image: <Building2 className="w-12 h-12 text-main" />
+  },
+  {
+    id: 2,
+    name: "The Social Hub",
+    description: "A vibrant space perfect for networking",
+    location: "Williamsburg",
+    time: "Thursday, 6-8 PM",
+    groupSize: "20-25 people",
+    topics: "Creative & Tech",
+    image: <Beer className="w-12 h-12 text-main" />
+  },
+  {
+    id: 3,
+    name: "The Urban Lounge",
+    description: "Modern space with great atmosphere",
+    location: "Midtown",
+    time: "Wednesday, 5-7 PM",
+    groupSize: "30-35 people",
+    topics: "Finance & Business",
+    image: <Martini className="w-12 h-12 text-main" />
+  }
+];
 
 export default function QuestionnaireResultsPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [matches, setMatches] = useState([mockMatches[0]]);
+  const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
+
+  const handleSeeMore = async () => {
+    setIsLoading(true);
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Get next match or cycle back to first
+    const nextIndex = (currentMatchIndex + 1) % mockMatches.length;
+    setCurrentMatchIndex(nextIndex);
+    setMatches([mockMatches[nextIndex]]);
+    
+    setIsLoading(false);
+  };
+
+  const currentMatch = matches[0];
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       {/* Header */}
       <header className="w-full bg-secondary-background border-b-2 border-border p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-2xl sm:text-3xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1 text-xl sm:text-2xl">🌆</span>
-            </div>
-          </Link>
+          <Logo/>
           <div className="hidden sm:flex items-center gap-4">
-            <Button variant="neutral" size="sm">Sign In</Button>
+            <Button 
+              variant="neutral" 
+              size="sm"
+              className="border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+              asChild
+            >
+              <Link href="/questionnaire">
+                <LogIn className="w-4 h-4 mr-2" />
+                Sign In
+              </Link>
+            </Button>
             <ModeToggle />
           </div>
         </div>
@@ -35,84 +99,89 @@ export default function QuestionnaireResultsPage() {
       <main className="flex-1 py-8 sm:py-12">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Perfect Matches Found!</h1>
-            <p className="text-lg text-foreground/80">Here are the best venues and groups that match your preferences</p>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Your Perfect Match</h1>
+            <p className="text-lg text-foreground/80">Based on your preferences, we found these great options</p>
           </div>
 
-          {/* Matches Section */}
-          <div className="space-y-8">
-            {/* Venue Match */}
-            <section className="bg-secondary-background p-6 rounded-lg border-2 border-border">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                <Wine className="w-6 h-6" />
-                Recommended Venue
-              </h2>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-24 h-24 bg-main/20 rounded-lg flex items-center justify-center">
-                    <Wine className="w-12 h-12 text-main" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">The Loft Bar</h3>
-                    <p className="text-foreground/80">Cocktail Bar • Rooftop</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <MapPin className="w-4 h-4" />
-                      <span>Lower East Side</span>
+          {/* Results Grid */}
+          <div className="grid gap-6">
+            {/* Match Card */}
+            <div className="bg-secondary-background p-6 rounded-lg border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <div className="flex flex-col sm:flex-row gap-6">
+                {/* Venue Image */}
+                <div className="w-full sm:w-48 h-48 bg-main/20 rounded-lg flex items-center justify-center">
+                  {currentMatch.image}
+                </div>
+
+                {/* Venue Details */}
+                <div className="flex-1">
+                  <h2 className="text-2xl font-bold mb-2">{currentMatch.name}</h2>
+                  <p className="text-foreground/80 mb-4">{currentMatch.description}</p>
+
+                  {/* Details Grid */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-main" />
+                      <span>{currentMatch.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CalendarDays className="w-5 h-5 text-main" />
+                      <span>{currentMatch.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="w-5 h-5 text-main" />
+                      <span>{currentMatch.groupSize}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <MessageSquareMore className="w-5 h-5 text-main" />
+                      <span>{currentMatch.topics}</span>
                     </div>
                   </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-5 h-5" />
-                    <span>Thursday</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5" />
-                    <span>7:00 PM</span>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button 
+                      variant="neutral" 
+                      size="lg" 
+                      className="w-full sm:w-auto border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                      asChild
+                    >
+                      <Link href={`/dashboard/event-details?id=${currentMatch.id}`}>
+                        View Details
+                      </Link>
+                    </Button>
+                    <Button 
+                      variant="neutral" 
+                      size="lg" 
+                      className="w-full sm:w-auto border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                      asChild
+                    >
+                      <Link href={`/questionnaire/results/checkout?id=${currentMatch.id}`}>
+                        Book Now
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
 
-            {/* Group Match */}
-            <section className="bg-secondary-background p-6 rounded-lg border-2 border-border">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                <Users className="w-6 h-6" />
-                Matched Group
-              </h2>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-24 h-24 bg-main/20 rounded-lg flex items-center justify-center">
-                    <Users className="w-12 h-12 text-main" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">Tech & Creative Professionals</h3>
-                    <p className="text-foreground/80">4 people • Similar interests</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span>👥 26-30 years old</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-bold mb-2">Common Interests:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Tech</span>
-                    <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Art</span>
-                    <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Travel</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="w-full sm:w-auto" asChild>
-                <Link href="/questionnaire/results/checkout">
-                  Join This Event
-                </Link>
-              </Button>
-              <Button variant="neutral" size="lg" className="w-full sm:w-auto">
-                See More Options
+            {/* See More Button */}
+            <div className="flex justify-center">
+              <Button 
+                variant="neutral" 
+                size="lg" 
+                className="w-full sm:w-auto border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                onClick={handleSeeMore}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Generating New Match...
+                  </>
+                ) : (
+                  "See More Options"
+                )}
               </Button>
             </div>
           </div>

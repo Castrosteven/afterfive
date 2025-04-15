@@ -8,8 +8,11 @@ import { Label } from "@/components/ui/label"
 import { UserPlus, Phone } from "lucide-react"
 import Link from "next/link"
 import Logo from "@/components/logo"
+import { useRouter } from "next/navigation"
 
 export default function SignUpPage() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       {/* Header */}
@@ -56,7 +59,10 @@ export default function SignUpPage() {
             </div>
 
             {/* Sign Up Button */}
-            <Button className="w-full bg-main text-main-foreground hover:bg-main/90">
+            <Button 
+              className="w-full bg-main text-main-foreground hover:bg-main/90"
+              onClick={() => router.push("/auth/phone")}
+            >
               <UserPlus className="w-4 h-4 mr-2" />
               Sign Up with Phone
             </Button>

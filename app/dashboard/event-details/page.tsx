@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ModeToggle } from "@/components/theme-toggle"
@@ -9,16 +11,16 @@ import {
   Wine,
   X,
   CalendarClock,
-  ChevronLeft,
   MessageSquare,
   Share2,
   Map,
   Phone,
   Globe,
   Mail,
-  // CreditCard,
-  Receipt
+  Receipt,
+  ArrowLeft
 } from "lucide-react"
+import Logo from "@/components/logo"
 
 export default function EventDetailsPage() {
   return (
@@ -26,16 +28,18 @@ export default function EventDetailsPage() {
       {/* Header */}
       <header className="w-full bg-secondary-background border-b-2 border-border p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <ChevronLeft className="w-5 h-5" />
-            <div className="flex items-center">
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-2xl sm:text-3xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1 text-xl sm:text-2xl">🌆</span>
-            </div>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="neutral" 
+              className="border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+              asChild
+            >
+              <Link href="/dashboard" className="flex items-center gap-2">
+                <ArrowLeft className="w-4 h-4" /> 
+              </Link>
+            </Button>
+            <Logo />
+          </div>
           <div className="hidden sm:flex items-center gap-4">
             <Button variant="neutral" size="sm">Sign Out</Button>
             <ModeToggle />

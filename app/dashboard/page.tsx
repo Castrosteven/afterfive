@@ -11,6 +11,7 @@ import {
   CalendarClock,
   ChevronRight
 } from "lucide-react"
+import Logo from "@/components/logo"
 
 export default function DashboardPage() {
   return (
@@ -18,15 +19,7 @@ export default function DashboardPage() {
       {/* Header */}
       <header className="w-full bg-secondary-background border-b-2 border-border p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-2xl sm:text-3xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1 text-xl sm:text-2xl">🌆</span>
-            </div>
-          </Link>
+          <Logo/>
           <div className="hidden sm:flex items-center gap-4">
             <Button variant="neutral" size="sm">Sign Out</Button>
             <ModeToggle />
