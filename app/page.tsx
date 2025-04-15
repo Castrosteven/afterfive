@@ -8,10 +8,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calendar, Users, MapPin } from "lucide-react"
 import { DrinkModal } from "@/components/drink-modal"
 import { useEffect, useState } from "react"
-
+import { useRouter } from "next/navigation";
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [hasShownModal, setHasShownModal] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,12 +78,12 @@ export default function Home() {
           Join spontaneous gatherings at curated venues. No planning needed - just show up and connect.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up [animation-delay:400ms]">
-          <Button size="lg" className="bg-main text-main-foreground hover:bg-main/90">
+          <Button onClick={()=>{
+            router.push("/questionnaire")
+          }} size="lg" className="bg-main text-main-foreground hover:bg-main/90">
             Find a Gathering
           </Button>
-          <Button size="lg" variant="default" className="bg-white text-black border-2 border-black hover:bg-black hover:text-white transition-colors">
-            Host an Event
-          </Button>
+         
         </div>
       </section>
 
