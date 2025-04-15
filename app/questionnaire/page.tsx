@@ -34,7 +34,7 @@ export default function QuestionnairePage() {
     const industry = formData.get("industry")
     const topics = formData.getAll("topics")
     const preferredAreas = formData.getAll("preferredAreas")
-    
+    console.log(age, venueTypes, preferredDays, preferredTime, industry, topics, preferredAreas)  
     // 2. Store the user preferences
     // 3. Process the matching algorithm
     // 4. Redirect to results page

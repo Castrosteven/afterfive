@@ -16,7 +16,7 @@ import {
   Phone,
   Globe,
   Mail,
-  CreditCard,
+  // CreditCard,
   Receipt
 } from "lucide-react"
 
