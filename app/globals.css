@@ -1,8 +1,93 @@
-
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientX {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Animation Utilities */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-gradient-x {
+  background-size: 200% auto;
+  animation: gradientX 3s ease infinite;
+}
+
+.animate-slide {
+  animation: slide 30s linear infinite;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+/* Carousel Styles */
+.venue-carousel {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.venue-track {
+  display: flex;
+  width: 200%;
+}
+
+.venue-track:hover {
+  animation-play-state: paused;
+}
+
+.venue-card {
+  flex: 0 0 25%;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.venue-card:hover {
+  transform: scale(1.05);
+}
 
 :root {
   --background: oklch(94.11% 0.036556 308.0303);
