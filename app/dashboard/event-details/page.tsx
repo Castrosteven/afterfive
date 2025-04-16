@@ -19,8 +19,11 @@ import {
   Receipt,
   ArrowLeft
 } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function EventDetailsPage() {
+  const router = useRouter()
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       {/* Main Content */}
@@ -31,12 +34,10 @@ export default function EventDetailsPage() {
             <Button 
               variant="neutral" 
               className="border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
-              asChild
+              onClick={() => router.back()}
             >
-              <Link href="/dashboard" className="flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Dashboard
-              </Link>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Button>
           </div>
 

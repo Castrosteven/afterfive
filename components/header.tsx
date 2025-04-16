@@ -1,14 +1,13 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme-toggle";
-import { LogIn } from "lucide-react";
+import { LogIn, LogOut } from "lucide-react";
 import Logo from "@/components/logo";
 import Link from "next/link";
-import { useState } from "react";
+import { createClient } from "@/utils/supabase/server";
 
-export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export async function  Header() {
+const client = await createClient()
+const { data: { user } } = await client.auth.getUser()
 
   return (
     <>
@@ -16,40 +15,35 @@ export function Header() {
         <div className="container mx-auto flex justify-between items-center">
           <Logo />
           <div className="flex items-center gap-4">
-            <Button 
-              variant="neutral" 
-              size="sm"
-              asChild
-            >
-              <Link href="/auth/signin">
-                <LogIn className="w-4 h-4 mr-2" />
-                Sign In
-              </Link>
-            </Button>
+            {user ? (
+              <form action="/auth/signout" method="post">
+                <Button 
+                  variant="neutral" 
+                  size="sm"
+                  type="submit"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </form>
+            ) : (
+              <Button 
+                variant="neutral" 
+                size="sm"
+                asChild
+              >
+                <Link href="/auth/signin">
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign In
+                </Link>
+              </Button>
+            )}
             <ModeToggle />
           </div>
         </div>
       </header>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="sm:hidden fixed inset-0 bg-background/95 z-50">
-          <div className="flex flex-col items-center justify-center h-full gap-4 p-4">
-            <Button variant="neutral" size="lg" className="w-full" asChild>
-              <Link href="/auth/signin">Sign In</Link>
-            </Button>
-            <ModeToggle />
-            <Button 
-              variant="neutral" 
-              size="lg" 
-              className="w-full"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Close Menu
-            </Button>
-          </div>
-        </div>
-      )}
+      
     </>
   );
 } 
