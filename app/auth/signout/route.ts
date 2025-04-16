@@ -10,7 +10,7 @@ export async function POST() {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.redirect(new URL("/", process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"), {
+    return NextResponse.redirect(new URL("/", process.env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000"), {
         status: 302,
     });
 }
