@@ -66,10 +66,15 @@ export default function SignInPage() {
       setIsGoogleLoading(true);
       console.log("Starting Google sign-in process...");
 
+      // Get the base URL based on the environment
+      const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL 
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+        : window.location.origin;
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: `${baseUrl}/auth/callback`
         }
       });
 
