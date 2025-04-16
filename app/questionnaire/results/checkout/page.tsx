@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ModeToggle } from "@/components/theme-toggle"
 import { 
   MapPin,
   Calendar,
@@ -14,25 +13,6 @@ import {
 export default function CheckoutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header */}
-      <header className="w-full bg-secondary-background border-b-2 border-border p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-2xl sm:text-3xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1 text-xl sm:text-2xl">🌆</span>
-            </div>
-          </Link>
-          <div className="hidden sm:flex items-center gap-4">
-            <Button variant="neutral" size="sm">Sign In</Button>
-            <ModeToggle />
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="flex-1 py-8 sm:py-12">
         <div className="container mx-auto px-4 max-w-3xl">

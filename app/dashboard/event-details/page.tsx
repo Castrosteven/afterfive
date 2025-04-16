@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ModeToggle } from "@/components/theme-toggle"
 import { 
   Calendar,
   Clock,
@@ -20,36 +19,27 @@ import {
   Receipt,
   ArrowLeft
 } from "lucide-react"
-import Logo from "@/components/logo"
 
 export default function EventDetailsPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header */}
-      <header className="w-full bg-secondary-background border-b-2 border-border p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-4">
+      {/* Main Content */}
+      <main className="flex-1 py-8 sm:py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          {/* Back Button */}
+          <div className="mb-8">
             <Button 
               variant="neutral" 
               className="border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
               asChild
             >
               <Link href="/dashboard" className="flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" /> 
+                <ArrowLeft className="w-4 h-4" />
+                Back to Dashboard
               </Link>
             </Button>
-            <Logo />
           </div>
-          <div className="hidden sm:flex items-center gap-4">
-            <Button variant="neutral" size="sm">Sign Out</Button>
-            <ModeToggle />
-          </div>
-        </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="flex-1 py-8 sm:py-12">
-        <div className="container mx-auto px-4 max-w-4xl">
           {/* Event Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
             <div>

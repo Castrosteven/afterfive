@@ -1,24 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/theme-toggle"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 import { Phone, ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import Logo from "@/components/logo"
 
 export default function PhoneVerificationPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header */}
-      <header className="w-full bg-secondary-background border-b-2 border-border p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Logo />
-          <ModeToggle />
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center p-4">
         <Card className="w-full max-w-md bg-secondary-background border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">

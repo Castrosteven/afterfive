@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ModeToggle } from "@/components/theme-toggle"
 import { 
   MapPin,
   Users,
@@ -12,10 +11,11 @@ import {
   Martini,
   CalendarDays,
   MessageSquareMore,
-  LogIn,
-  Loader2
+  Loader2,
+  Eye,
+  CalendarCheck,
+  Search
 } from "lucide-react"
-import Logo from "@/components/logo"
 
 // Mock data for matches
 const mockMatches = [
@@ -74,27 +74,6 @@ export default function QuestionnaireResultsPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header */}
-      <header className="w-full bg-secondary-background border-b-2 border-border p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Logo/>
-          <div className="hidden sm:flex items-center gap-4">
-            <Button 
-              variant="neutral" 
-              size="sm"
-              className="border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
-              asChild
-            >
-              <Link href="/questionnaire">
-                <LogIn className="w-4 h-4 mr-2" />
-                Sign In
-              </Link>
-            </Button>
-            <ModeToggle />
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="flex-1 py-8 sm:py-12">
         <div className="container mx-auto px-4 max-w-3xl">
@@ -141,22 +120,22 @@ export default function QuestionnaireResultsPage() {
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
-                      variant="neutral" 
                       size="lg" 
-                      className="w-full sm:w-auto border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                      className="w-full sm:w-auto bg-main text-main-foreground hover:bg-main/90 border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
                       asChild
                     >
                       <Link href={`/dashboard/event-details?id=${currentMatch.id}`}>
+                        <Eye className="w-5 h-5 mr-2" />
                         View Details
                       </Link>
                     </Button>
                     <Button 
-                      variant="neutral" 
                       size="lg" 
-                      className="w-full sm:w-auto border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                      className="w-full sm:w-auto bg-main text-main-foreground hover:bg-main/90 border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
                       asChild
                     >
                       <Link href={`/questionnaire/results/checkout?id=${currentMatch.id}`}>
+                        <CalendarCheck className="w-5 h-5 mr-2" />
                         Book Now
                       </Link>
                     </Button>
@@ -168,9 +147,8 @@ export default function QuestionnaireResultsPage() {
             {/* See More Button */}
             <div className="flex justify-center">
               <Button 
-                variant="neutral" 
                 size="lg" 
-                className="w-full sm:w-auto border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                className="w-full sm:w-auto bg-main text-main-foreground hover:bg-main/90 border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
                 onClick={handleSeeMore}
                 disabled={isLoading}
               >
@@ -180,7 +158,10 @@ export default function QuestionnaireResultsPage() {
                     Generating New Match...
                   </>
                 ) : (
-                  "See More Options"
+                  <>
+                    <Search className="w-5 h-5 mr-2" />
+                    See More Options
+                  </>
                 )}
               </Button>
             </div>

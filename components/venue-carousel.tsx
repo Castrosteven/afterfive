@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { MapPin, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRef, useState } from "react";
 
 const venues = [
   {
@@ -62,11 +63,54 @@ const venues = [
 ];
 
 export function VenueCarousel() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+    setIsPaused(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStart - touchEnd;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // Swiped left
+        if (trackRef.current) {
+          trackRef.current.scrollLeft += 300;
+        }
+      } else {
+        // Swiped right
+        if (trackRef.current) {
+          trackRef.current.scrollLeft -= 300;
+        }
+      }
+    }
+    setIsPaused(false);
+  };
+
   return (
     <div className="venue-carousel overflow-hidden py-8">
-      <div className="venue-track animate-slide flex gap-4">
+      <div 
+        ref={trackRef}
+        className={`venue-track ${isPaused ? 'paused' : ''} flex gap-4 overflow-x-auto snap-x snap-mandatory`}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         {[...venues, ...venues].map((venue, index) => (
-          <Card key={`${venue.name}-${index}`} className="venue-card w-[300px] flex-shrink-0 bg-secondary-background border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all">
+          <Card 
+            key={`${venue.name}-${index}`} 
+            className="venue-card w-[280px] sm:w-[300px] flex-shrink-0 snap-center bg-secondary-background border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+          >
             <CardHeader className="p-0">
               <div className="relative h-48 w-full">
                 <Image

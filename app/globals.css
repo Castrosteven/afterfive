@@ -28,11 +28,11 @@
 }
 
 @keyframes slide {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
-    transform: translateX(-100%);
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
   }
 }
 
@@ -65,28 +65,44 @@
 
 /* Carousel Styles */
 .venue-carousel {
-  overflow: hidden;
   position: relative;
   width: 100%;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .venue-track {
   display: flex;
-  width: 200%;
+  gap: 1rem;
+  width: max-content;
+  animation: slide 30s linear infinite;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.venue-track:hover {
+.venue-track::-webkit-scrollbar {
+  display: none;
+}
+
+.venue-track.paused {
   animation-play-state: paused;
 }
 
 .venue-card {
-  flex: 0 0 25%;
-  padding: 1rem;
-  transition: transform 0.3s ease;
+  flex: 0 0 auto;
+  width: 280px;
+  scroll-snap-align: center;
 }
 
 .venue-card:hover {
   transform: scale(1.05);
+}
+
+@media (min-width: 640px) {
+  .venue-card {
+    width: 300px;
+  }
 }
 
 :root {

@@ -1,19 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/theme-toggle"
-import Link from "next/link"
 import { VenueCarousel } from "@/components/venue-carousel"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar, Users, MapPin, LogIn } from "lucide-react"
+import { Calendar, Users, MapPin } from "lucide-react"
 import { DrinkModal } from "@/components/drink-modal"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation";
-import Logo from "@/components/logo";
+import { Footer } from "@/components/footer";
+
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [hasShownModal, setHasShownModal] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -35,46 +33,7 @@ export default function Home() {
   }, [hasShownModal]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header */}
-      <header className="w-full bg-secondary-background border-b-2 border-border p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
-         <Logo/>
-
-          {/* Right side buttons */}
-          <div className="flex items-center gap-4">
-            <Button 
-              variant="neutral" 
-              size="sm"
-              onClick={() => router.push("/questionnaire")}
-            >
-              <LogIn className="w-4 h-4 mr-2" />
-              Sign In
-            </Button>
-            <ModeToggle />
-          </div>
-        </div>
-      </header>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="sm:hidden fixed inset-0 bg-background/95 z-50">
-          <div className="flex flex-col items-center justify-center h-full gap-4 p-4">
-            <Button variant="neutral" size="lg" className="w-full">Sign In</Button>
-            <ModeToggle />
-            <Button 
-              variant="neutral" 
-              size="lg" 
-              className="w-full"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Close Menu
-            </Button>
-          </div>
-        </div>
-      )}
-
+    <>
       {/* Hero Section */}
       <section className="w-full py-20 px-4 text-center bg-gradient-to-b from-background to-secondary-background">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in-up">
@@ -86,12 +45,15 @@ export default function Home() {
           Join spontaneous gatherings at curated venues. No planning needed - just show up and connect.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up [animation-delay:400ms]">
-          <Button onClick={()=>{
-            router.push("/questionnaire")
-          }} size="lg" className="bg-main text-main-foreground hover:bg-main/90">
+          <Button 
+            onClick={()=>{
+              router.push("/questionnaire")
+            }} 
+            size="lg" 
+            className="bg-main text-main-foreground hover:bg-main/90 border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
+          >
             Find a Gathering
           </Button>
-         
         </div>
       </section>
 
@@ -192,7 +154,9 @@ export default function Home() {
                     <span className="text-foreground">First drink on us!</span>
                   </div>
                 </div>
-                <Button className="w-full mt-6 bg-main text-main-foreground hover:bg-main/90 transition-colors">
+                <Button 
+                  className="w-full mt-6 bg-main text-main-foreground hover:bg-main/90 border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
+                >
                   Get Started
                 </Button>
               </CardContent>
@@ -227,7 +191,9 @@ export default function Home() {
                     <span className="text-foreground">First drink on us!</span>
                   </div>
                 </div>
-                <Button className="w-full mt-6 bg-main text-main-foreground hover:bg-main/90 transition-colors">
+                <Button 
+                  className="w-full mt-6 bg-main text-main-foreground hover:bg-main/90 border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
+                >
                   Get Started
                 </Button>
               </CardContent>
@@ -239,26 +205,7 @@ export default function Home() {
       {/* Drink Modal */}
       <DrinkModal isOpen={showModal} onClose={() => setShowModal(false)} />
 
-      {/* Footer */}
-      <footer className="w-full bg-secondary-background border-t-2 border-border p-4 sm:p-6">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-           <Logo/>
-            <span className="text-sm sm:text-base text-foreground/60">© 2025</span>
-          </div>
-          <div className="flex gap-2 sm:gap-4">
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/privacy">Privacy</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/terms">Terms</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/contact">Contact</Link>
-            </Button>
-          </div>
-        </div>
-      </footer>
-    </div>
+      <Footer />
+    </>
   );
 }

@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { ModeToggle } from "@/components/theme-toggle"
 import { 
   Wine, 
   Building2,  
@@ -19,10 +18,8 @@ import {
   Map,
   BriefcaseBusiness,
   MessageSquareMore,
-  LogIn,
   AlertCircle
 } from "lucide-react"
-import Logo from "@/components/logo"
 import { useState } from "react"
 import { submitQuestionnaire } from "@/app/actions/questionnaire"
 
@@ -52,27 +49,6 @@ export default function QuestionnairePage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Header */}
-      <header className="w-full bg-secondary-background border-b-2 border-border p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <Logo/>
-          <div className="hidden sm:flex items-center gap-4">
-            <Button 
-              variant="neutral" 
-              size="sm"
-              className="border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
-              asChild
-            >
-              <Link href="/questionnaire">
-                <LogIn className="w-4 h-4 mr-2" />
-                Sign In
-              </Link>
-            </Button>
-            <ModeToggle />
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="flex-1 py-8 sm:py-12">
         <div className="container mx-auto px-4 max-w-3xl">
