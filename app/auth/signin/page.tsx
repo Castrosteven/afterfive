@@ -7,9 +7,91 @@ import { Label } from "@/components/ui/label"
 import { Phone } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { createClient } from "@/utils/supabase/client"
+import { useState } from "react"
+import { toast } from "@/components/ui/sonner"
 
 export default function SignInPage() {
   const router = useRouter();
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const supabase = createClient();
+
+  const handlePhoneSignIn = async () => {
+    try {
+      setIsLoading(true);
+      console.log("Starting phone sign-in process...");
+      console.log("Input phone number:", phoneNumber);
+      
+      // Format phone number to E.164 format
+      const formattedPhone = phoneNumber.startsWith("+") 
+        ? phoneNumber 
+        : `+1${phoneNumber.replace(/\D/g, "")}`;
+      
+      console.log("Formatted phone number:", formattedPhone);
+      console.log("Supabase client initialized:", !!supabase);
+
+      const { data, error } = await supabase.auth.signInWithOtp({
+        phone: formattedPhone,
+        options: {
+          channel: "sms"
+        }
+      });
+
+      console.log("Supabase response:", { data, error });
+
+      if (error) {
+        console.error("Supabase error details:", {
+          message: error.message,
+          status: error.status,
+          name: error.name
+        });
+        throw error;
+      }
+
+      console.log("OTP sent successfully");
+      toast.success("Verification code sent!");
+      router.push(`/auth/phone?phone=${encodeURIComponent(formattedPhone)}`);
+    } catch (error) {
+      console.error("Error in phone sign-in:", error);
+      toast.error("Failed to send verification code. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsGoogleLoading(true);
+      console.log("Starting Google sign-in process...");
+
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+
+      console.log("Supabase Google auth response:", { data, error });
+
+      if (error) {
+        console.error("Google auth error details:", {
+          message: error.message,
+          status: error.status,
+          name: error.name
+        });
+        throw error;
+      }
+
+      // The redirect will be handled by the callback route
+    } catch (error) {
+      console.error("Error in Google sign-in:", error);
+      toast.error("Failed to sign in with Google. Please try again.");
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
@@ -30,6 +112,8 @@ export default function SignInPage() {
                   type="tel"
                   placeholder="Enter your phone number"
                   className="pl-10 bg-background border-2 border-border"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </div>
             </div>
@@ -37,10 +121,11 @@ export default function SignInPage() {
             {/* Sign In Button */}
             <Button 
               className="w-full bg-main text-main-foreground hover:bg-main/90"
-              onClick={() => router.push("/auth/phone")}
+              onClick={handlePhoneSignIn}
+              disabled={isLoading || !phoneNumber}
             >
               <Phone className="w-4 h-4 mr-2" />
-              Sign In with Phone
+              {isLoading ? "Sending Code..." : "Sign In with Phone"}
             </Button>
 
             {/* Divider */}
@@ -54,7 +139,12 @@ export default function SignInPage() {
             </div>
 
             {/* Google Sign In */}
-            <Button variant="neutral" className="w-full border-2 border-border">
+            <Button 
+              variant="neutral" 
+              className="w-full border-2 border-border"
+              onClick={handleGoogleSignIn}
+              disabled={isGoogleLoading}
+            >
               <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -73,7 +163,7 @@ export default function SignInPage() {
                   fill="#EA4335"
                 />
               </svg>
-              Sign in with Google
+              {isGoogleLoading ? "Signing in..." : "Sign in with Google"}
             </Button>
 
             {/* Sign Up Link */}

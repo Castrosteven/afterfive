@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { 
@@ -10,8 +12,49 @@ import {
   CalendarClock,
   ChevronRight
 } from "lucide-react"
+import { useEffect, useState } from "react"
+import { createClient } from "@/utils/supabase/client"
+import { useRouter } from "next/navigation"
+import { User as SupabaseUser } from "@supabase/supabase-js"
 
 export default function DashboardPage() {
+  const [user, setUser] = useState<SupabaseUser | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
+  const supabase = createClient()
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser()
+        if (error) throw error
+        setUser(user)
+      } catch (error) {
+        console.error("Error checking auth:", error)
+        router.push("/auth/signin")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    checkAuth()
+  }, [supabase.auth, router])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-main mx-auto mb-4"></div>
+          <p className="text-foreground">Loading dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return null // Will redirect in useEffect
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       {/* Main Content */}
@@ -128,5 +171,5 @@ export default function DashboardPage() {
         </div>
       </footer>
     </div>
-  );
+  )
 } 

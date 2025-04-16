@@ -5,8 +5,114 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 import { Phone, ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
+import { createClient } from "@/utils/supabase/client"
+import { useState, useEffect } from "react"
+import { toast } from "@/components/ui/sonner"
 
 export default function PhoneVerificationPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [phone, setPhone] = useState<string | null>(null);
+  const [otp, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const phoneFromUrl = searchParams.get("phone");
+    if (phoneFromUrl) {
+      console.log("Setting phone from URL:", phoneFromUrl);
+      setPhone(phoneFromUrl);
+    } else {
+      console.log("No phone number found in URL, redirecting to sign-in");
+      router.push("/auth/signin");
+    }
+  }, [searchParams, router]);
+
+  const handleVerify = async () => {
+    if (!phone) {
+      console.error("No phone number available for verification");
+      toast.error("Phone number not found. Please try signing in again.");
+      router.push("/auth/signin");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      console.log("Starting verification process...");
+      console.log("OTP entered:", otp);
+      console.log("Phone number:", phone);
+
+      const { data, error } = await supabase.auth.verifyOtp({
+        phone: phone,
+        token: otp,
+        type: "sms"
+      });
+
+      console.log("Supabase verification response:", { data, error });
+
+      if (error) {
+        if (error.message.includes("expired") || error.message.includes("invalid")) {
+          console.error("Token expired or invalid, requesting new code");
+          toast.error("Code expired. Please request a new code.");
+          setOtp(""); // Clear the OTP input
+          return;
+        }
+        throw error;
+      }
+
+      console.log("Phone number verified successfully");
+      toast.success("Phone number verified!");
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Error verifying phone:", error);
+      toast.error("Invalid verification code. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (!phone) {
+      console.error("No phone number available for resend");
+      toast.error("Phone number not found. Please try signing in again.");
+      router.push("/auth/signin");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      console.log("Resending verification code...");
+      console.log("Phone number:", phone);
+
+      const { data, error } = await supabase.auth.signInWithOtp({
+        phone: phone,
+        options: {
+          channel: "sms"
+        }
+      });
+
+      console.log("Supabase resend response:", { data, error });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("New verification code sent successfully");
+      toast.success("New verification code sent!");
+      setOtp(""); // Clear the OTP input
+    } catch (error) {
+      console.error("Error resending code:", error);
+      toast.error("Failed to resend verification code. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (!phone) {
+    return null;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       {/* Main Content */}
@@ -33,6 +139,8 @@ export default function PhoneVerificationPage() {
                   maxLength={6}
                   className="w-full justify-center"
                   containerClassName="group flex items-center has-[:disabled]:opacity-50"
+                  value={otp}
+                  onChange={setOtp}
                 >
                   <InputOTPGroup className="flex gap-2">
                     <InputOTPSlot
@@ -67,14 +175,23 @@ export default function PhoneVerificationPage() {
             {/* Resend Code */}
             <div className="text-center text-sm text-foreground/60">
               Didn&apos;t receive a code?{" "}
-              <Button variant="neutral" className="p-0 h-auto text-main hover:underline">
+              <Button 
+                variant="neutral" 
+                className="p-0 h-auto text-main hover:underline"
+                onClick={handleResend}
+                disabled={isLoading}
+              >
                 Resend
               </Button>
             </div>
 
             {/* Verify Button */}
-            <Button className="w-full bg-main text-main-foreground hover:bg-main/90">
-              Verify Phone
+            <Button 
+              className="w-full bg-main text-main-foreground hover:bg-main/90"
+              onClick={handleVerify}
+              disabled={isLoading || otp.length !== 6}
+            >
+              {isLoading ? "Verifying..." : "Verify Phone"}
             </Button>
           </CardContent>
         </Card>

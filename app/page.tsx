@@ -37,7 +37,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className="w-full py-20 px-4 text-center bg-gradient-to-b from-background to-secondary-background">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in-up">
-          Meet <span className="text-main animate-gradient-x bg-gradient-to-r from-main via-main-foreground to-main bg-clip-text text-transparent">Strangers</span>{" "}
+          Meet <span className="animate-gradient-x bg-gradient-to-r from-main via-main-foreground to-main bg-clip-text text-transparent">Strangers</span>{" "}
           <br className="hidden md:block" />
           at NYC&apos;s Best Venues
         </h1>
