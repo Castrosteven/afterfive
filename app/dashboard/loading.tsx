@@ -1,9 +1,6 @@
-import { Header } from "@/components/header";
-
 export default function Loading() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[...Array(6)].map((_, i) => (
