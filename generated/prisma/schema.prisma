@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Event {
+  id               String   @id @default(uuid())
+  title            String
+  description      String
+  startDateAndTime DateTime
+  endDateAndTime   DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Venue {
+  id            String      @id @default(uuid())
+  name          String
+  address       String
+  city          String
+  state         String
+  zip           String
+  googlePlaceId String
+  types         VenueType[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model VenueType {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  venues    Venue[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
