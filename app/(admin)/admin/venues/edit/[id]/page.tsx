@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { use } from "react";
-import Image from "next/image";
 import RenderGooglePhoto from "@/components/RenderGooglePhoto";
 
 interface VenueType {

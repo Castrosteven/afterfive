@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { VenuesTable } from "@/components/admin/venues-table";
 import Link from "next/link";
 import prisma from "@/utils/prisma";
+import { Prisma } from "@/generated/prisma";
 
 async function getAllVenues() {
   try {
@@ -29,6 +30,20 @@ async function getAllVenues() {
   }
 }
 
+export type VenueWithTypesAndPhoto = Prisma.VenueGetPayload<{
+  include: {
+    types: {
+      select: {
+        name: true;
+      };
+    };
+    primaryPhoto: {
+      select: {
+        name: true;
+      };
+    };
+  };
+}>;
 export default async function AdminVenuesPage() {
   const venues = await getAllVenues();
   console.log(venues);

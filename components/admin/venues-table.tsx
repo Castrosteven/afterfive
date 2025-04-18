@@ -19,28 +19,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import RenderGooglePhoto from "@/components/RenderGooglePhoto";
-import { Venue, VenueType } from "@/generated/prisma";
+import { VenueWithTypesAndPhoto } from "@/app/(admin)/admin/venues/page";
 
 interface VenuesTableProps {
-  venues: {
-    types: {
-      name: string;
-    }[];
-  } & {
-    name: string;
-    id: string;
-    address: string;
-    city: string;
-    state: string;
-    zip: string;
-    googlePlaceId: string;
-
-    primaryPhoto: {
-      name: string;
-    };
-    createdAt: Date;
-    updatedAt: Date;
-  }[];
+  venues: VenueWithTypesAndPhoto[];
 }
 
 export function VenuesTable({ venues }: VenuesTableProps) {
