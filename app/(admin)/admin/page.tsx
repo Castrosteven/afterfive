@@ -1,14 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Calendar, MapPin, Activity } from "lucide-react"
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar, MapPin } from "lucide-react";
+import prisma from "@/utils/prisma";
+import Link from "next/link";
 export default async function AdminDashboardPage() {
-  // TODO: Replace with actual data fetching
+  // Fetch actual data
+  const [events, venues] = await Promise.all([
+    prisma.event.count(),
+    prisma.venue.count(),
+  ]);
+
   const stats = [
-    { title: "Total Users", value: "1,234", icon: Users },
-    { title: "Active Events", value: "45", icon: Calendar },
-    { title: "Venues", value: "28", icon: MapPin },
-    { title: "Activity Rate", value: "78%", icon: Activity },
-  ]
+    { title: "Active Events", value: events.toString(), icon: Calendar },
+    { title: "Venues", value: venues.toString(), icon: MapPin },
+  ];
 
   return (
     <div className="space-y-8">
@@ -41,7 +45,9 @@ export default async function AdminDashboardPage() {
           <CardContent>
             <div className="space-y-4">
               {/* TODO: Add recent activity list */}
-              <p className="text-sm text-muted-foreground">No recent activity</p>
+              <p className="text-sm text-muted-foreground">
+                No recent activity
+              </p>
             </div>
           </CardContent>
         </Card>
@@ -52,12 +58,19 @@ export default async function AdminDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {/* TODO: Add quick action buttons */}
-              <p className="text-sm text-muted-foreground">No quick actions available</p>
+              <Link
+                href="/admin/venues"
+                className="block p-3 rounded-lg border-2 border-border hover:border-main transition-colors"
+              >
+                <h3 className="font-medium">Manage Venues</h3>
+                <p className="text-sm text-muted-foreground">
+                  Add and update venue information
+                </p>
+              </Link>
             </div>
           </CardContent>
         </Card>
       </div>
     </div>
-  )
-} 
+  );
+}

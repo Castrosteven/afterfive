@@ -28,6 +28,11 @@ export type Venue = $Result.DefaultSelection<Prisma.$VenuePayload>
  * 
  */
 export type VenueType = $Result.DefaultSelection<Prisma.$VenueTypePayload>
+/**
+ * Model VenuePhoto
+ * 
+ */
+export type VenuePhoto = $Result.DefaultSelection<Prisma.$VenuePhotoPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -183,6 +188,16 @@ export class PrismaClient<
     * ```
     */
   get venueType(): Prisma.VenueTypeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.venuePhoto`: Exposes CRUD operations for the **VenuePhoto** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VenuePhotos
+    * const venuePhotos = await prisma.venuePhoto.findMany()
+    * ```
+    */
+  get venuePhoto(): Prisma.VenuePhotoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -625,7 +640,8 @@ export namespace Prisma {
   export const ModelName: {
     Event: 'Event',
     Venue: 'Venue',
-    VenueType: 'VenueType'
+    VenueType: 'VenueType',
+    VenuePhoto: 'VenuePhoto'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,7 +660,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "event" | "venue" | "venueType"
+      modelProps: "event" | "venue" | "venueType" | "venuePhoto"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -870,6 +886,80 @@ export namespace Prisma {
           }
         }
       }
+      VenuePhoto: {
+        payload: Prisma.$VenuePhotoPayload<ExtArgs>
+        fields: Prisma.VenuePhotoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VenuePhotoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VenuePhotoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>
+          }
+          findFirst: {
+            args: Prisma.VenuePhotoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VenuePhotoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>
+          }
+          findMany: {
+            args: Prisma.VenuePhotoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>[]
+          }
+          create: {
+            args: Prisma.VenuePhotoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>
+          }
+          createMany: {
+            args: Prisma.VenuePhotoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VenuePhotoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>[]
+          }
+          delete: {
+            args: Prisma.VenuePhotoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>
+          }
+          update: {
+            args: Prisma.VenuePhotoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>
+          }
+          deleteMany: {
+            args: Prisma.VenuePhotoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VenuePhotoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VenuePhotoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>[]
+          }
+          upsert: {
+            args: Prisma.VenuePhotoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VenuePhotoPayload>
+          }
+          aggregate: {
+            args: Prisma.VenuePhotoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVenuePhoto>
+          }
+          groupBy: {
+            args: Prisma.VenuePhotoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VenuePhotoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VenuePhotoCountArgs<ExtArgs>
+            result: $Utils.Optional<VenuePhotoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -957,6 +1047,7 @@ export namespace Prisma {
     event?: EventOmit
     venue?: VenueOmit
     venueType?: VenueTypeOmit
+    venuePhoto?: VenuePhotoOmit
   }
 
   /* Types for Logging */
@@ -1052,10 +1143,12 @@ export namespace Prisma {
 
   export type VenueCountOutputType = {
     types: number
+    photos: number
   }
 
   export type VenueCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     types?: boolean | VenueCountOutputTypeCountTypesArgs
+    photos?: boolean | VenueCountOutputTypeCountPhotosArgs
   }
 
   // Custom InputTypes
@@ -1074,6 +1167,13 @@ export namespace Prisma {
    */
   export type VenueCountOutputTypeCountTypesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VenueTypeWhereInput
+  }
+
+  /**
+   * VenueCountOutputType without action
+   */
+  export type VenueCountOutputTypeCountPhotosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VenuePhotoWhereInput
   }
 
 
@@ -2151,6 +2251,7 @@ export namespace Prisma {
     state: string | null
     zip: string | null
     googlePlaceId: string | null
+    primaryPhotoId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2163,6 +2264,7 @@ export namespace Prisma {
     state: string | null
     zip: string | null
     googlePlaceId: string | null
+    primaryPhotoId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2175,6 +2277,7 @@ export namespace Prisma {
     state: number
     zip: number
     googlePlaceId: number
+    primaryPhotoId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2189,6 +2292,7 @@ export namespace Prisma {
     state?: true
     zip?: true
     googlePlaceId?: true
+    primaryPhotoId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2201,6 +2305,7 @@ export namespace Prisma {
     state?: true
     zip?: true
     googlePlaceId?: true
+    primaryPhotoId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2213,6 +2318,7 @@ export namespace Prisma {
     state?: true
     zip?: true
     googlePlaceId?: true
+    primaryPhotoId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2298,6 +2404,7 @@ export namespace Prisma {
     state: string
     zip: string
     googlePlaceId: string
+    primaryPhotoId: string | null
     createdAt: Date
     updatedAt: Date
     _count: VenueCountAggregateOutputType | null
@@ -2327,9 +2434,12 @@ export namespace Prisma {
     state?: boolean
     zip?: boolean
     googlePlaceId?: boolean
+    primaryPhotoId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     types?: boolean | Venue$typesArgs<ExtArgs>
+    photos?: boolean | Venue$photosArgs<ExtArgs>
+    primaryPhoto?: boolean | Venue$primaryPhotoArgs<ExtArgs>
     _count?: boolean | VenueCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["venue"]>
 
@@ -2341,8 +2451,10 @@ export namespace Prisma {
     state?: boolean
     zip?: boolean
     googlePlaceId?: boolean
+    primaryPhotoId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    primaryPhoto?: boolean | Venue$primaryPhotoArgs<ExtArgs>
   }, ExtArgs["result"]["venue"]>
 
   export type VenueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2353,8 +2465,10 @@ export namespace Prisma {
     state?: boolean
     zip?: boolean
     googlePlaceId?: boolean
+    primaryPhotoId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    primaryPhoto?: boolean | Venue$primaryPhotoArgs<ExtArgs>
   }, ExtArgs["result"]["venue"]>
 
   export type VenueSelectScalar = {
@@ -2365,22 +2479,31 @@ export namespace Prisma {
     state?: boolean
     zip?: boolean
     googlePlaceId?: boolean
+    primaryPhotoId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type VenueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "city" | "state" | "zip" | "googlePlaceId" | "createdAt" | "updatedAt", ExtArgs["result"]["venue"]>
+  export type VenueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "city" | "state" | "zip" | "googlePlaceId" | "primaryPhotoId" | "createdAt" | "updatedAt", ExtArgs["result"]["venue"]>
   export type VenueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     types?: boolean | Venue$typesArgs<ExtArgs>
+    photos?: boolean | Venue$photosArgs<ExtArgs>
+    primaryPhoto?: boolean | Venue$primaryPhotoArgs<ExtArgs>
     _count?: boolean | VenueCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type VenueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type VenueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VenueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    primaryPhoto?: boolean | Venue$primaryPhotoArgs<ExtArgs>
+  }
+  export type VenueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    primaryPhoto?: boolean | Venue$primaryPhotoArgs<ExtArgs>
+  }
 
   export type $VenuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Venue"
     objects: {
       types: Prisma.$VenueTypePayload<ExtArgs>[]
+      photos: Prisma.$VenuePhotoPayload<ExtArgs>[]
+      primaryPhoto: Prisma.$VenuePhotoPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2390,6 +2513,7 @@ export namespace Prisma {
       state: string
       zip: string
       googlePlaceId: string
+      primaryPhotoId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["venue"]>
@@ -2787,6 +2911,8 @@ export namespace Prisma {
   export interface Prisma__VenueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     types<T extends Venue$typesArgs<ExtArgs> = {}>(args?: Subset<T, Venue$typesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenueTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    photos<T extends Venue$photosArgs<ExtArgs> = {}>(args?: Subset<T, Venue$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    primaryPhoto<T extends Venue$primaryPhotoArgs<ExtArgs> = {}>(args?: Subset<T, Venue$primaryPhotoArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2823,6 +2949,7 @@ export namespace Prisma {
     readonly state: FieldRef<"Venue", 'String'>
     readonly zip: FieldRef<"Venue", 'String'>
     readonly googlePlaceId: FieldRef<"Venue", 'String'>
+    readonly primaryPhotoId: FieldRef<"Venue", 'String'>
     readonly createdAt: FieldRef<"Venue", 'DateTime'>
     readonly updatedAt: FieldRef<"Venue", 'DateTime'>
   }
@@ -3074,6 +3201,10 @@ export namespace Prisma {
      */
     data: VenueCreateManyInput | VenueCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3144,6 +3275,10 @@ export namespace Prisma {
      * Limit how many Venues to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3234,6 +3369,49 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VenueTypeScalarFieldEnum | VenueTypeScalarFieldEnum[]
+  }
+
+  /**
+   * Venue.photos
+   */
+  export type Venue$photosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    where?: VenuePhotoWhereInput
+    orderBy?: VenuePhotoOrderByWithRelationInput | VenuePhotoOrderByWithRelationInput[]
+    cursor?: VenuePhotoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VenuePhotoScalarFieldEnum | VenuePhotoScalarFieldEnum[]
+  }
+
+  /**
+   * Venue.primaryPhoto
+   */
+  export type Venue$primaryPhotoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    where?: VenuePhotoWhereInput
   }
 
   /**
@@ -4313,6 +4491,1151 @@ export namespace Prisma {
 
 
   /**
+   * Model VenuePhoto
+   */
+
+  export type AggregateVenuePhoto = {
+    _count: VenuePhotoCountAggregateOutputType | null
+    _avg: VenuePhotoAvgAggregateOutputType | null
+    _sum: VenuePhotoSumAggregateOutputType | null
+    _min: VenuePhotoMinAggregateOutputType | null
+    _max: VenuePhotoMaxAggregateOutputType | null
+  }
+
+  export type VenuePhotoAvgAggregateOutputType = {
+    widthPx: number | null
+    heightPx: number | null
+  }
+
+  export type VenuePhotoSumAggregateOutputType = {
+    widthPx: number | null
+    heightPx: number | null
+  }
+
+  export type VenuePhotoMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    widthPx: number | null
+    heightPx: number | null
+    venueId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VenuePhotoMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    widthPx: number | null
+    heightPx: number | null
+    venueId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type VenuePhotoCountAggregateOutputType = {
+    id: number
+    name: number
+    widthPx: number
+    heightPx: number
+    venueId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type VenuePhotoAvgAggregateInputType = {
+    widthPx?: true
+    heightPx?: true
+  }
+
+  export type VenuePhotoSumAggregateInputType = {
+    widthPx?: true
+    heightPx?: true
+  }
+
+  export type VenuePhotoMinAggregateInputType = {
+    id?: true
+    name?: true
+    widthPx?: true
+    heightPx?: true
+    venueId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VenuePhotoMaxAggregateInputType = {
+    id?: true
+    name?: true
+    widthPx?: true
+    heightPx?: true
+    venueId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type VenuePhotoCountAggregateInputType = {
+    id?: true
+    name?: true
+    widthPx?: true
+    heightPx?: true
+    venueId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type VenuePhotoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VenuePhoto to aggregate.
+     */
+    where?: VenuePhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenuePhotos to fetch.
+     */
+    orderBy?: VenuePhotoOrderByWithRelationInput | VenuePhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VenuePhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenuePhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenuePhotos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VenuePhotos
+    **/
+    _count?: true | VenuePhotoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VenuePhotoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VenuePhotoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VenuePhotoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VenuePhotoMaxAggregateInputType
+  }
+
+  export type GetVenuePhotoAggregateType<T extends VenuePhotoAggregateArgs> = {
+        [P in keyof T & keyof AggregateVenuePhoto]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVenuePhoto[P]>
+      : GetScalarType<T[P], AggregateVenuePhoto[P]>
+  }
+
+
+
+
+  export type VenuePhotoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VenuePhotoWhereInput
+    orderBy?: VenuePhotoOrderByWithAggregationInput | VenuePhotoOrderByWithAggregationInput[]
+    by: VenuePhotoScalarFieldEnum[] | VenuePhotoScalarFieldEnum
+    having?: VenuePhotoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VenuePhotoCountAggregateInputType | true
+    _avg?: VenuePhotoAvgAggregateInputType
+    _sum?: VenuePhotoSumAggregateInputType
+    _min?: VenuePhotoMinAggregateInputType
+    _max?: VenuePhotoMaxAggregateInputType
+  }
+
+  export type VenuePhotoGroupByOutputType = {
+    id: string
+    name: string
+    widthPx: number
+    heightPx: number
+    venueId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: VenuePhotoCountAggregateOutputType | null
+    _avg: VenuePhotoAvgAggregateOutputType | null
+    _sum: VenuePhotoSumAggregateOutputType | null
+    _min: VenuePhotoMinAggregateOutputType | null
+    _max: VenuePhotoMaxAggregateOutputType | null
+  }
+
+  type GetVenuePhotoGroupByPayload<T extends VenuePhotoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VenuePhotoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VenuePhotoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VenuePhotoGroupByOutputType[P]>
+            : GetScalarType<T[P], VenuePhotoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VenuePhotoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    widthPx?: boolean
+    heightPx?: boolean
+    venueId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    primaryFor?: boolean | VenuePhoto$primaryForArgs<ExtArgs>
+  }, ExtArgs["result"]["venuePhoto"]>
+
+  export type VenuePhotoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    widthPx?: boolean
+    heightPx?: boolean
+    venueId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["venuePhoto"]>
+
+  export type VenuePhotoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    widthPx?: boolean
+    heightPx?: boolean
+    venueId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["venuePhoto"]>
+
+  export type VenuePhotoSelectScalar = {
+    id?: boolean
+    name?: boolean
+    widthPx?: boolean
+    heightPx?: boolean
+    venueId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type VenuePhotoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "widthPx" | "heightPx" | "venueId" | "createdAt" | "updatedAt", ExtArgs["result"]["venuePhoto"]>
+  export type VenuePhotoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+    primaryFor?: boolean | VenuePhoto$primaryForArgs<ExtArgs>
+  }
+  export type VenuePhotoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+  }
+  export type VenuePhotoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    venue?: boolean | VenueDefaultArgs<ExtArgs>
+  }
+
+  export type $VenuePhotoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VenuePhoto"
+    objects: {
+      venue: Prisma.$VenuePayload<ExtArgs>
+      primaryFor: Prisma.$VenuePayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      widthPx: number
+      heightPx: number
+      venueId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["venuePhoto"]>
+    composites: {}
+  }
+
+  type VenuePhotoGetPayload<S extends boolean | null | undefined | VenuePhotoDefaultArgs> = $Result.GetResult<Prisma.$VenuePhotoPayload, S>
+
+  type VenuePhotoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VenuePhotoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VenuePhotoCountAggregateInputType | true
+    }
+
+  export interface VenuePhotoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VenuePhoto'], meta: { name: 'VenuePhoto' } }
+    /**
+     * Find zero or one VenuePhoto that matches the filter.
+     * @param {VenuePhotoFindUniqueArgs} args - Arguments to find a VenuePhoto
+     * @example
+     * // Get one VenuePhoto
+     * const venuePhoto = await prisma.venuePhoto.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VenuePhotoFindUniqueArgs>(args: SelectSubset<T, VenuePhotoFindUniqueArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VenuePhoto that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VenuePhotoFindUniqueOrThrowArgs} args - Arguments to find a VenuePhoto
+     * @example
+     * // Get one VenuePhoto
+     * const venuePhoto = await prisma.venuePhoto.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VenuePhotoFindUniqueOrThrowArgs>(args: SelectSubset<T, VenuePhotoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VenuePhoto that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenuePhotoFindFirstArgs} args - Arguments to find a VenuePhoto
+     * @example
+     * // Get one VenuePhoto
+     * const venuePhoto = await prisma.venuePhoto.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VenuePhotoFindFirstArgs>(args?: SelectSubset<T, VenuePhotoFindFirstArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VenuePhoto that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenuePhotoFindFirstOrThrowArgs} args - Arguments to find a VenuePhoto
+     * @example
+     * // Get one VenuePhoto
+     * const venuePhoto = await prisma.venuePhoto.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VenuePhotoFindFirstOrThrowArgs>(args?: SelectSubset<T, VenuePhotoFindFirstOrThrowArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VenuePhotos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenuePhotoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VenuePhotos
+     * const venuePhotos = await prisma.venuePhoto.findMany()
+     * 
+     * // Get first 10 VenuePhotos
+     * const venuePhotos = await prisma.venuePhoto.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const venuePhotoWithIdOnly = await prisma.venuePhoto.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VenuePhotoFindManyArgs>(args?: SelectSubset<T, VenuePhotoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VenuePhoto.
+     * @param {VenuePhotoCreateArgs} args - Arguments to create a VenuePhoto.
+     * @example
+     * // Create one VenuePhoto
+     * const VenuePhoto = await prisma.venuePhoto.create({
+     *   data: {
+     *     // ... data to create a VenuePhoto
+     *   }
+     * })
+     * 
+     */
+    create<T extends VenuePhotoCreateArgs>(args: SelectSubset<T, VenuePhotoCreateArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VenuePhotos.
+     * @param {VenuePhotoCreateManyArgs} args - Arguments to create many VenuePhotos.
+     * @example
+     * // Create many VenuePhotos
+     * const venuePhoto = await prisma.venuePhoto.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VenuePhotoCreateManyArgs>(args?: SelectSubset<T, VenuePhotoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many VenuePhotos and returns the data saved in the database.
+     * @param {VenuePhotoCreateManyAndReturnArgs} args - Arguments to create many VenuePhotos.
+     * @example
+     * // Create many VenuePhotos
+     * const venuePhoto = await prisma.venuePhoto.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many VenuePhotos and only return the `id`
+     * const venuePhotoWithIdOnly = await prisma.venuePhoto.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VenuePhotoCreateManyAndReturnArgs>(args?: SelectSubset<T, VenuePhotoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a VenuePhoto.
+     * @param {VenuePhotoDeleteArgs} args - Arguments to delete one VenuePhoto.
+     * @example
+     * // Delete one VenuePhoto
+     * const VenuePhoto = await prisma.venuePhoto.delete({
+     *   where: {
+     *     // ... filter to delete one VenuePhoto
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VenuePhotoDeleteArgs>(args: SelectSubset<T, VenuePhotoDeleteArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VenuePhoto.
+     * @param {VenuePhotoUpdateArgs} args - Arguments to update one VenuePhoto.
+     * @example
+     * // Update one VenuePhoto
+     * const venuePhoto = await prisma.venuePhoto.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VenuePhotoUpdateArgs>(args: SelectSubset<T, VenuePhotoUpdateArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VenuePhotos.
+     * @param {VenuePhotoDeleteManyArgs} args - Arguments to filter VenuePhotos to delete.
+     * @example
+     * // Delete a few VenuePhotos
+     * const { count } = await prisma.venuePhoto.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VenuePhotoDeleteManyArgs>(args?: SelectSubset<T, VenuePhotoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VenuePhotos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenuePhotoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VenuePhotos
+     * const venuePhoto = await prisma.venuePhoto.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VenuePhotoUpdateManyArgs>(args: SelectSubset<T, VenuePhotoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VenuePhotos and returns the data updated in the database.
+     * @param {VenuePhotoUpdateManyAndReturnArgs} args - Arguments to update many VenuePhotos.
+     * @example
+     * // Update many VenuePhotos
+     * const venuePhoto = await prisma.venuePhoto.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more VenuePhotos and only return the `id`
+     * const venuePhotoWithIdOnly = await prisma.venuePhoto.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VenuePhotoUpdateManyAndReturnArgs>(args: SelectSubset<T, VenuePhotoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one VenuePhoto.
+     * @param {VenuePhotoUpsertArgs} args - Arguments to update or create a VenuePhoto.
+     * @example
+     * // Update or create a VenuePhoto
+     * const venuePhoto = await prisma.venuePhoto.upsert({
+     *   create: {
+     *     // ... data to create a VenuePhoto
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VenuePhoto we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VenuePhotoUpsertArgs>(args: SelectSubset<T, VenuePhotoUpsertArgs<ExtArgs>>): Prisma__VenuePhotoClient<$Result.GetResult<Prisma.$VenuePhotoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VenuePhotos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenuePhotoCountArgs} args - Arguments to filter VenuePhotos to count.
+     * @example
+     * // Count the number of VenuePhotos
+     * const count = await prisma.venuePhoto.count({
+     *   where: {
+     *     // ... the filter for the VenuePhotos we want to count
+     *   }
+     * })
+    **/
+    count<T extends VenuePhotoCountArgs>(
+      args?: Subset<T, VenuePhotoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VenuePhotoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VenuePhoto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenuePhotoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VenuePhotoAggregateArgs>(args: Subset<T, VenuePhotoAggregateArgs>): Prisma.PrismaPromise<GetVenuePhotoAggregateType<T>>
+
+    /**
+     * Group by VenuePhoto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VenuePhotoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VenuePhotoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VenuePhotoGroupByArgs['orderBy'] }
+        : { orderBy?: VenuePhotoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VenuePhotoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVenuePhotoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VenuePhoto model
+   */
+  readonly fields: VenuePhotoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VenuePhoto.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VenuePhotoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    venue<T extends VenueDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VenueDefaultArgs<ExtArgs>>): Prisma__VenueClient<$Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    primaryFor<T extends VenuePhoto$primaryForArgs<ExtArgs> = {}>(args?: Subset<T, VenuePhoto$primaryForArgs<ExtArgs>>): Prisma__VenueClient<$Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VenuePhoto model
+   */
+  interface VenuePhotoFieldRefs {
+    readonly id: FieldRef<"VenuePhoto", 'String'>
+    readonly name: FieldRef<"VenuePhoto", 'String'>
+    readonly widthPx: FieldRef<"VenuePhoto", 'Int'>
+    readonly heightPx: FieldRef<"VenuePhoto", 'Int'>
+    readonly venueId: FieldRef<"VenuePhoto", 'String'>
+    readonly createdAt: FieldRef<"VenuePhoto", 'DateTime'>
+    readonly updatedAt: FieldRef<"VenuePhoto", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VenuePhoto findUnique
+   */
+  export type VenuePhotoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * Filter, which VenuePhoto to fetch.
+     */
+    where: VenuePhotoWhereUniqueInput
+  }
+
+  /**
+   * VenuePhoto findUniqueOrThrow
+   */
+  export type VenuePhotoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * Filter, which VenuePhoto to fetch.
+     */
+    where: VenuePhotoWhereUniqueInput
+  }
+
+  /**
+   * VenuePhoto findFirst
+   */
+  export type VenuePhotoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * Filter, which VenuePhoto to fetch.
+     */
+    where?: VenuePhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenuePhotos to fetch.
+     */
+    orderBy?: VenuePhotoOrderByWithRelationInput | VenuePhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VenuePhotos.
+     */
+    cursor?: VenuePhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenuePhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenuePhotos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VenuePhotos.
+     */
+    distinct?: VenuePhotoScalarFieldEnum | VenuePhotoScalarFieldEnum[]
+  }
+
+  /**
+   * VenuePhoto findFirstOrThrow
+   */
+  export type VenuePhotoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * Filter, which VenuePhoto to fetch.
+     */
+    where?: VenuePhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenuePhotos to fetch.
+     */
+    orderBy?: VenuePhotoOrderByWithRelationInput | VenuePhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VenuePhotos.
+     */
+    cursor?: VenuePhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenuePhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenuePhotos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VenuePhotos.
+     */
+    distinct?: VenuePhotoScalarFieldEnum | VenuePhotoScalarFieldEnum[]
+  }
+
+  /**
+   * VenuePhoto findMany
+   */
+  export type VenuePhotoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * Filter, which VenuePhotos to fetch.
+     */
+    where?: VenuePhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VenuePhotos to fetch.
+     */
+    orderBy?: VenuePhotoOrderByWithRelationInput | VenuePhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VenuePhotos.
+     */
+    cursor?: VenuePhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VenuePhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VenuePhotos.
+     */
+    skip?: number
+    distinct?: VenuePhotoScalarFieldEnum | VenuePhotoScalarFieldEnum[]
+  }
+
+  /**
+   * VenuePhoto create
+   */
+  export type VenuePhotoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VenuePhoto.
+     */
+    data: XOR<VenuePhotoCreateInput, VenuePhotoUncheckedCreateInput>
+  }
+
+  /**
+   * VenuePhoto createMany
+   */
+  export type VenuePhotoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VenuePhotos.
+     */
+    data: VenuePhotoCreateManyInput | VenuePhotoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * VenuePhoto createManyAndReturn
+   */
+  export type VenuePhotoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * The data used to create many VenuePhotos.
+     */
+    data: VenuePhotoCreateManyInput | VenuePhotoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VenuePhoto update
+   */
+  export type VenuePhotoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VenuePhoto.
+     */
+    data: XOR<VenuePhotoUpdateInput, VenuePhotoUncheckedUpdateInput>
+    /**
+     * Choose, which VenuePhoto to update.
+     */
+    where: VenuePhotoWhereUniqueInput
+  }
+
+  /**
+   * VenuePhoto updateMany
+   */
+  export type VenuePhotoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VenuePhotos.
+     */
+    data: XOR<VenuePhotoUpdateManyMutationInput, VenuePhotoUncheckedUpdateManyInput>
+    /**
+     * Filter which VenuePhotos to update
+     */
+    where?: VenuePhotoWhereInput
+    /**
+     * Limit how many VenuePhotos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VenuePhoto updateManyAndReturn
+   */
+  export type VenuePhotoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * The data used to update VenuePhotos.
+     */
+    data: XOR<VenuePhotoUpdateManyMutationInput, VenuePhotoUncheckedUpdateManyInput>
+    /**
+     * Filter which VenuePhotos to update
+     */
+    where?: VenuePhotoWhereInput
+    /**
+     * Limit how many VenuePhotos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * VenuePhoto upsert
+   */
+  export type VenuePhotoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VenuePhoto to update in case it exists.
+     */
+    where: VenuePhotoWhereUniqueInput
+    /**
+     * In case the VenuePhoto found by the `where` argument doesn't exist, create a new VenuePhoto with this data.
+     */
+    create: XOR<VenuePhotoCreateInput, VenuePhotoUncheckedCreateInput>
+    /**
+     * In case the VenuePhoto was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VenuePhotoUpdateInput, VenuePhotoUncheckedUpdateInput>
+  }
+
+  /**
+   * VenuePhoto delete
+   */
+  export type VenuePhotoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+    /**
+     * Filter which VenuePhoto to delete.
+     */
+    where: VenuePhotoWhereUniqueInput
+  }
+
+  /**
+   * VenuePhoto deleteMany
+   */
+  export type VenuePhotoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VenuePhotos to delete
+     */
+    where?: VenuePhotoWhereInput
+    /**
+     * Limit how many VenuePhotos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VenuePhoto.primaryFor
+   */
+  export type VenuePhoto$primaryForArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Venue
+     */
+    select?: VenueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Venue
+     */
+    omit?: VenueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenueInclude<ExtArgs> | null
+    where?: VenueWhereInput
+  }
+
+  /**
+   * VenuePhoto without action
+   */
+  export type VenuePhotoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VenuePhoto
+     */
+    select?: VenuePhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VenuePhoto
+     */
+    omit?: VenuePhotoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VenuePhotoInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4347,6 +5670,7 @@ export namespace Prisma {
     state: 'state',
     zip: 'zip',
     googlePlaceId: 'googlePlaceId',
+    primaryPhotoId: 'primaryPhotoId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -4364,6 +5688,19 @@ export namespace Prisma {
   export type VenueTypeScalarFieldEnum = (typeof VenueTypeScalarFieldEnum)[keyof typeof VenueTypeScalarFieldEnum]
 
 
+  export const VenuePhotoScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    widthPx: 'widthPx',
+    heightPx: 'heightPx',
+    venueId: 'venueId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type VenuePhotoScalarFieldEnum = (typeof VenuePhotoScalarFieldEnum)[keyof typeof VenuePhotoScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -4378,6 +5715,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -4424,6 +5769,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -4503,9 +5862,12 @@ export namespace Prisma {
     state?: StringFilter<"Venue"> | string
     zip?: StringFilter<"Venue"> | string
     googlePlaceId?: StringFilter<"Venue"> | string
+    primaryPhotoId?: StringNullableFilter<"Venue"> | string | null
     createdAt?: DateTimeFilter<"Venue"> | Date | string
     updatedAt?: DateTimeFilter<"Venue"> | Date | string
     types?: VenueTypeListRelationFilter
+    photos?: VenuePhotoListRelationFilter
+    primaryPhoto?: XOR<VenuePhotoNullableScalarRelationFilter, VenuePhotoWhereInput> | null
   }
 
   export type VenueOrderByWithRelationInput = {
@@ -4516,13 +5878,17 @@ export namespace Prisma {
     state?: SortOrder
     zip?: SortOrder
     googlePlaceId?: SortOrder
+    primaryPhotoId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     types?: VenueTypeOrderByRelationAggregateInput
+    photos?: VenuePhotoOrderByRelationAggregateInput
+    primaryPhoto?: VenuePhotoOrderByWithRelationInput
   }
 
   export type VenueWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    primaryPhotoId?: string
     AND?: VenueWhereInput | VenueWhereInput[]
     OR?: VenueWhereInput[]
     NOT?: VenueWhereInput | VenueWhereInput[]
@@ -4535,7 +5901,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Venue"> | Date | string
     updatedAt?: DateTimeFilter<"Venue"> | Date | string
     types?: VenueTypeListRelationFilter
-  }, "id">
+    photos?: VenuePhotoListRelationFilter
+    primaryPhoto?: XOR<VenuePhotoNullableScalarRelationFilter, VenuePhotoWhereInput> | null
+  }, "id" | "primaryPhotoId">
 
   export type VenueOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4545,6 +5913,7 @@ export namespace Prisma {
     state?: SortOrder
     zip?: SortOrder
     googlePlaceId?: SortOrder
+    primaryPhotoId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: VenueCountOrderByAggregateInput
@@ -4563,6 +5932,7 @@ export namespace Prisma {
     state?: StringWithAggregatesFilter<"Venue"> | string
     zip?: StringWithAggregatesFilter<"Venue"> | string
     googlePlaceId?: StringWithAggregatesFilter<"Venue"> | string
+    primaryPhotoId?: StringNullableWithAggregatesFilter<"Venue"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Venue"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Venue"> | Date | string
   }
@@ -4615,6 +5985,77 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"VenueType"> | string
     createdAt?: DateTimeWithAggregatesFilter<"VenueType"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"VenueType"> | Date | string
+  }
+
+  export type VenuePhotoWhereInput = {
+    AND?: VenuePhotoWhereInput | VenuePhotoWhereInput[]
+    OR?: VenuePhotoWhereInput[]
+    NOT?: VenuePhotoWhereInput | VenuePhotoWhereInput[]
+    id?: StringFilter<"VenuePhoto"> | string
+    name?: StringFilter<"VenuePhoto"> | string
+    widthPx?: IntFilter<"VenuePhoto"> | number
+    heightPx?: IntFilter<"VenuePhoto"> | number
+    venueId?: StringFilter<"VenuePhoto"> | string
+    createdAt?: DateTimeFilter<"VenuePhoto"> | Date | string
+    updatedAt?: DateTimeFilter<"VenuePhoto"> | Date | string
+    venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
+    primaryFor?: XOR<VenueNullableScalarRelationFilter, VenueWhereInput> | null
+  }
+
+  export type VenuePhotoOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    widthPx?: SortOrder
+    heightPx?: SortOrder
+    venueId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    venue?: VenueOrderByWithRelationInput
+    primaryFor?: VenueOrderByWithRelationInput
+  }
+
+  export type VenuePhotoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name_venueId?: VenuePhotoNameVenueIdCompoundUniqueInput
+    AND?: VenuePhotoWhereInput | VenuePhotoWhereInput[]
+    OR?: VenuePhotoWhereInput[]
+    NOT?: VenuePhotoWhereInput | VenuePhotoWhereInput[]
+    name?: StringFilter<"VenuePhoto"> | string
+    widthPx?: IntFilter<"VenuePhoto"> | number
+    heightPx?: IntFilter<"VenuePhoto"> | number
+    venueId?: StringFilter<"VenuePhoto"> | string
+    createdAt?: DateTimeFilter<"VenuePhoto"> | Date | string
+    updatedAt?: DateTimeFilter<"VenuePhoto"> | Date | string
+    venue?: XOR<VenueScalarRelationFilter, VenueWhereInput>
+    primaryFor?: XOR<VenueNullableScalarRelationFilter, VenueWhereInput> | null
+  }, "id" | "name_venueId">
+
+  export type VenuePhotoOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    widthPx?: SortOrder
+    heightPx?: SortOrder
+    venueId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: VenuePhotoCountOrderByAggregateInput
+    _avg?: VenuePhotoAvgOrderByAggregateInput
+    _max?: VenuePhotoMaxOrderByAggregateInput
+    _min?: VenuePhotoMinOrderByAggregateInput
+    _sum?: VenuePhotoSumOrderByAggregateInput
+  }
+
+  export type VenuePhotoScalarWhereWithAggregatesInput = {
+    AND?: VenuePhotoScalarWhereWithAggregatesInput | VenuePhotoScalarWhereWithAggregatesInput[]
+    OR?: VenuePhotoScalarWhereWithAggregatesInput[]
+    NOT?: VenuePhotoScalarWhereWithAggregatesInput | VenuePhotoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"VenuePhoto"> | string
+    name?: StringWithAggregatesFilter<"VenuePhoto"> | string
+    widthPx?: IntWithAggregatesFilter<"VenuePhoto"> | number
+    heightPx?: IntWithAggregatesFilter<"VenuePhoto"> | number
+    venueId?: StringWithAggregatesFilter<"VenuePhoto"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"VenuePhoto"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"VenuePhoto"> | Date | string
   }
 
   export type EventCreateInput = {
@@ -4698,6 +6139,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     types?: VenueTypeCreateNestedManyWithoutVenuesInput
+    photos?: VenuePhotoCreateNestedManyWithoutVenueInput
+    primaryPhoto?: VenuePhotoCreateNestedOneWithoutPrimaryForInput
   }
 
   export type VenueUncheckedCreateInput = {
@@ -4708,9 +6151,11 @@ export namespace Prisma {
     state: string
     zip: string
     googlePlaceId: string
+    primaryPhotoId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     types?: VenueTypeUncheckedCreateNestedManyWithoutVenuesInput
+    photos?: VenuePhotoUncheckedCreateNestedManyWithoutVenueInput
   }
 
   export type VenueUpdateInput = {
@@ -4724,6 +6169,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     types?: VenueTypeUpdateManyWithoutVenuesNestedInput
+    photos?: VenuePhotoUpdateManyWithoutVenueNestedInput
+    primaryPhoto?: VenuePhotoUpdateOneWithoutPrimaryForNestedInput
   }
 
   export type VenueUncheckedUpdateInput = {
@@ -4734,9 +6181,11 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     zip?: StringFieldUpdateOperationsInput | string
     googlePlaceId?: StringFieldUpdateOperationsInput | string
+    primaryPhotoId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     types?: VenueTypeUncheckedUpdateManyWithoutVenuesNestedInput
+    photos?: VenuePhotoUncheckedUpdateManyWithoutVenueNestedInput
   }
 
   export type VenueCreateManyInput = {
@@ -4747,6 +6196,7 @@ export namespace Prisma {
     state: string
     zip: string
     googlePlaceId: string
+    primaryPhotoId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4771,6 +6221,7 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     zip?: StringFieldUpdateOperationsInput | string
     googlePlaceId?: StringFieldUpdateOperationsInput | string
+    primaryPhotoId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4824,6 +6275,79 @@ export namespace Prisma {
   export type VenueTypeUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VenuePhotoCreateInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    venue: VenueCreateNestedOneWithoutPhotosInput
+    primaryFor?: VenueCreateNestedOneWithoutPrimaryPhotoInput
+  }
+
+  export type VenuePhotoUncheckedCreateInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    venueId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    primaryFor?: VenueUncheckedCreateNestedOneWithoutPrimaryPhotoInput
+  }
+
+  export type VenuePhotoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    venue?: VenueUpdateOneRequiredWithoutPhotosNestedInput
+    primaryFor?: VenueUpdateOneWithoutPrimaryPhotoNestedInput
+  }
+
+  export type VenuePhotoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    venueId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    primaryFor?: VenueUncheckedUpdateOneWithoutPrimaryPhotoNestedInput
+  }
+
+  export type VenuePhotoCreateManyInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    venueId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VenuePhotoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VenuePhotoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    venueId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4916,13 +6440,48 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type VenueTypeListRelationFilter = {
     every?: VenueTypeWhereInput
     some?: VenueTypeWhereInput
     none?: VenueTypeWhereInput
   }
 
+  export type VenuePhotoListRelationFilter = {
+    every?: VenuePhotoWhereInput
+    some?: VenuePhotoWhereInput
+    none?: VenuePhotoWhereInput
+  }
+
+  export type VenuePhotoNullableScalarRelationFilter = {
+    is?: VenuePhotoWhereInput | null
+    isNot?: VenuePhotoWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type VenueTypeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VenuePhotoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -4934,6 +6493,7 @@ export namespace Prisma {
     state?: SortOrder
     zip?: SortOrder
     googlePlaceId?: SortOrder
+    primaryPhotoId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4946,6 +6506,7 @@ export namespace Prisma {
     state?: SortOrder
     zip?: SortOrder
     googlePlaceId?: SortOrder
+    primaryPhotoId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4958,8 +6519,27 @@ export namespace Prisma {
     state?: SortOrder
     zip?: SortOrder
     googlePlaceId?: SortOrder
+    primaryPhotoId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type VenueListRelationFilter = {
@@ -4993,6 +6573,88 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type VenueScalarRelationFilter = {
+    is?: VenueWhereInput
+    isNot?: VenueWhereInput
+  }
+
+  export type VenueNullableScalarRelationFilter = {
+    is?: VenueWhereInput | null
+    isNot?: VenueWhereInput | null
+  }
+
+  export type VenuePhotoNameVenueIdCompoundUniqueInput = {
+    name: string
+    venueId: string
+  }
+
+  export type VenuePhotoCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    widthPx?: SortOrder
+    heightPx?: SortOrder
+    venueId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VenuePhotoAvgOrderByAggregateInput = {
+    widthPx?: SortOrder
+    heightPx?: SortOrder
+  }
+
+  export type VenuePhotoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    widthPx?: SortOrder
+    heightPx?: SortOrder
+    venueId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VenuePhotoMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    widthPx?: SortOrder
+    heightPx?: SortOrder
+    venueId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type VenuePhotoSumOrderByAggregateInput = {
+    widthPx?: SortOrder
+    heightPx?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -5007,10 +6669,30 @@ export namespace Prisma {
     connect?: VenueTypeWhereUniqueInput | VenueTypeWhereUniqueInput[]
   }
 
+  export type VenuePhotoCreateNestedManyWithoutVenueInput = {
+    create?: XOR<VenuePhotoCreateWithoutVenueInput, VenuePhotoUncheckedCreateWithoutVenueInput> | VenuePhotoCreateWithoutVenueInput[] | VenuePhotoUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenuePhotoCreateOrConnectWithoutVenueInput | VenuePhotoCreateOrConnectWithoutVenueInput[]
+    createMany?: VenuePhotoCreateManyVenueInputEnvelope
+    connect?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+  }
+
+  export type VenuePhotoCreateNestedOneWithoutPrimaryForInput = {
+    create?: XOR<VenuePhotoCreateWithoutPrimaryForInput, VenuePhotoUncheckedCreateWithoutPrimaryForInput>
+    connectOrCreate?: VenuePhotoCreateOrConnectWithoutPrimaryForInput
+    connect?: VenuePhotoWhereUniqueInput
+  }
+
   export type VenueTypeUncheckedCreateNestedManyWithoutVenuesInput = {
     create?: XOR<VenueTypeCreateWithoutVenuesInput, VenueTypeUncheckedCreateWithoutVenuesInput> | VenueTypeCreateWithoutVenuesInput[] | VenueTypeUncheckedCreateWithoutVenuesInput[]
     connectOrCreate?: VenueTypeCreateOrConnectWithoutVenuesInput | VenueTypeCreateOrConnectWithoutVenuesInput[]
     connect?: VenueTypeWhereUniqueInput | VenueTypeWhereUniqueInput[]
+  }
+
+  export type VenuePhotoUncheckedCreateNestedManyWithoutVenueInput = {
+    create?: XOR<VenuePhotoCreateWithoutVenueInput, VenuePhotoUncheckedCreateWithoutVenueInput> | VenuePhotoCreateWithoutVenueInput[] | VenuePhotoUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenuePhotoCreateOrConnectWithoutVenueInput | VenuePhotoCreateOrConnectWithoutVenueInput[]
+    createMany?: VenuePhotoCreateManyVenueInputEnvelope
+    connect?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
   }
 
   export type VenueTypeUpdateManyWithoutVenuesNestedInput = {
@@ -5026,6 +6708,34 @@ export namespace Prisma {
     deleteMany?: VenueTypeScalarWhereInput | VenueTypeScalarWhereInput[]
   }
 
+  export type VenuePhotoUpdateManyWithoutVenueNestedInput = {
+    create?: XOR<VenuePhotoCreateWithoutVenueInput, VenuePhotoUncheckedCreateWithoutVenueInput> | VenuePhotoCreateWithoutVenueInput[] | VenuePhotoUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenuePhotoCreateOrConnectWithoutVenueInput | VenuePhotoCreateOrConnectWithoutVenueInput[]
+    upsert?: VenuePhotoUpsertWithWhereUniqueWithoutVenueInput | VenuePhotoUpsertWithWhereUniqueWithoutVenueInput[]
+    createMany?: VenuePhotoCreateManyVenueInputEnvelope
+    set?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    disconnect?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    delete?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    connect?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    update?: VenuePhotoUpdateWithWhereUniqueWithoutVenueInput | VenuePhotoUpdateWithWhereUniqueWithoutVenueInput[]
+    updateMany?: VenuePhotoUpdateManyWithWhereWithoutVenueInput | VenuePhotoUpdateManyWithWhereWithoutVenueInput[]
+    deleteMany?: VenuePhotoScalarWhereInput | VenuePhotoScalarWhereInput[]
+  }
+
+  export type VenuePhotoUpdateOneWithoutPrimaryForNestedInput = {
+    create?: XOR<VenuePhotoCreateWithoutPrimaryForInput, VenuePhotoUncheckedCreateWithoutPrimaryForInput>
+    connectOrCreate?: VenuePhotoCreateOrConnectWithoutPrimaryForInput
+    upsert?: VenuePhotoUpsertWithoutPrimaryForInput
+    disconnect?: VenuePhotoWhereInput | boolean
+    delete?: VenuePhotoWhereInput | boolean
+    connect?: VenuePhotoWhereUniqueInput
+    update?: XOR<XOR<VenuePhotoUpdateToOneWithWhereWithoutPrimaryForInput, VenuePhotoUpdateWithoutPrimaryForInput>, VenuePhotoUncheckedUpdateWithoutPrimaryForInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type VenueTypeUncheckedUpdateManyWithoutVenuesNestedInput = {
     create?: XOR<VenueTypeCreateWithoutVenuesInput, VenueTypeUncheckedCreateWithoutVenuesInput> | VenueTypeCreateWithoutVenuesInput[] | VenueTypeUncheckedCreateWithoutVenuesInput[]
     connectOrCreate?: VenueTypeCreateOrConnectWithoutVenuesInput | VenueTypeCreateOrConnectWithoutVenuesInput[]
@@ -5037,6 +6747,20 @@ export namespace Prisma {
     update?: VenueTypeUpdateWithWhereUniqueWithoutVenuesInput | VenueTypeUpdateWithWhereUniqueWithoutVenuesInput[]
     updateMany?: VenueTypeUpdateManyWithWhereWithoutVenuesInput | VenueTypeUpdateManyWithWhereWithoutVenuesInput[]
     deleteMany?: VenueTypeScalarWhereInput | VenueTypeScalarWhereInput[]
+  }
+
+  export type VenuePhotoUncheckedUpdateManyWithoutVenueNestedInput = {
+    create?: XOR<VenuePhotoCreateWithoutVenueInput, VenuePhotoUncheckedCreateWithoutVenueInput> | VenuePhotoCreateWithoutVenueInput[] | VenuePhotoUncheckedCreateWithoutVenueInput[]
+    connectOrCreate?: VenuePhotoCreateOrConnectWithoutVenueInput | VenuePhotoCreateOrConnectWithoutVenueInput[]
+    upsert?: VenuePhotoUpsertWithWhereUniqueWithoutVenueInput | VenuePhotoUpsertWithWhereUniqueWithoutVenueInput[]
+    createMany?: VenuePhotoCreateManyVenueInputEnvelope
+    set?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    disconnect?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    delete?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    connect?: VenuePhotoWhereUniqueInput | VenuePhotoWhereUniqueInput[]
+    update?: VenuePhotoUpdateWithWhereUniqueWithoutVenueInput | VenuePhotoUpdateWithWhereUniqueWithoutVenueInput[]
+    updateMany?: VenuePhotoUpdateManyWithWhereWithoutVenueInput | VenuePhotoUpdateManyWithWhereWithoutVenueInput[]
+    deleteMany?: VenuePhotoScalarWhereInput | VenuePhotoScalarWhereInput[]
   }
 
   export type VenueCreateNestedManyWithoutTypesInput = {
@@ -5075,6 +6799,60 @@ export namespace Prisma {
     update?: VenueUpdateWithWhereUniqueWithoutTypesInput | VenueUpdateWithWhereUniqueWithoutTypesInput[]
     updateMany?: VenueUpdateManyWithWhereWithoutTypesInput | VenueUpdateManyWithWhereWithoutTypesInput[]
     deleteMany?: VenueScalarWhereInput | VenueScalarWhereInput[]
+  }
+
+  export type VenueCreateNestedOneWithoutPhotosInput = {
+    create?: XOR<VenueCreateWithoutPhotosInput, VenueUncheckedCreateWithoutPhotosInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutPhotosInput
+    connect?: VenueWhereUniqueInput
+  }
+
+  export type VenueCreateNestedOneWithoutPrimaryPhotoInput = {
+    create?: XOR<VenueCreateWithoutPrimaryPhotoInput, VenueUncheckedCreateWithoutPrimaryPhotoInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutPrimaryPhotoInput
+    connect?: VenueWhereUniqueInput
+  }
+
+  export type VenueUncheckedCreateNestedOneWithoutPrimaryPhotoInput = {
+    create?: XOR<VenueCreateWithoutPrimaryPhotoInput, VenueUncheckedCreateWithoutPrimaryPhotoInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutPrimaryPhotoInput
+    connect?: VenueWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type VenueUpdateOneRequiredWithoutPhotosNestedInput = {
+    create?: XOR<VenueCreateWithoutPhotosInput, VenueUncheckedCreateWithoutPhotosInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutPhotosInput
+    upsert?: VenueUpsertWithoutPhotosInput
+    connect?: VenueWhereUniqueInput
+    update?: XOR<XOR<VenueUpdateToOneWithWhereWithoutPhotosInput, VenueUpdateWithoutPhotosInput>, VenueUncheckedUpdateWithoutPhotosInput>
+  }
+
+  export type VenueUpdateOneWithoutPrimaryPhotoNestedInput = {
+    create?: XOR<VenueCreateWithoutPrimaryPhotoInput, VenueUncheckedCreateWithoutPrimaryPhotoInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutPrimaryPhotoInput
+    upsert?: VenueUpsertWithoutPrimaryPhotoInput
+    disconnect?: VenueWhereInput | boolean
+    delete?: VenueWhereInput | boolean
+    connect?: VenueWhereUniqueInput
+    update?: XOR<XOR<VenueUpdateToOneWithWhereWithoutPrimaryPhotoInput, VenueUpdateWithoutPrimaryPhotoInput>, VenueUncheckedUpdateWithoutPrimaryPhotoInput>
+  }
+
+  export type VenueUncheckedUpdateOneWithoutPrimaryPhotoNestedInput = {
+    create?: XOR<VenueCreateWithoutPrimaryPhotoInput, VenueUncheckedCreateWithoutPrimaryPhotoInput>
+    connectOrCreate?: VenueCreateOrConnectWithoutPrimaryPhotoInput
+    upsert?: VenueUpsertWithoutPrimaryPhotoInput
+    disconnect?: VenueWhereInput | boolean
+    delete?: VenueWhereInput | boolean
+    connect?: VenueWhereUniqueInput
+    update?: XOR<XOR<VenueUpdateToOneWithWhereWithoutPrimaryPhotoInput, VenueUpdateWithoutPrimaryPhotoInput>, VenueUncheckedUpdateWithoutPrimaryPhotoInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5144,6 +6922,75 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type VenueTypeCreateWithoutVenuesInput = {
     id?: string
     name: string
@@ -5161,6 +7008,61 @@ export namespace Prisma {
   export type VenueTypeCreateOrConnectWithoutVenuesInput = {
     where: VenueTypeWhereUniqueInput
     create: XOR<VenueTypeCreateWithoutVenuesInput, VenueTypeUncheckedCreateWithoutVenuesInput>
+  }
+
+  export type VenuePhotoCreateWithoutVenueInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    primaryFor?: VenueCreateNestedOneWithoutPrimaryPhotoInput
+  }
+
+  export type VenuePhotoUncheckedCreateWithoutVenueInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    primaryFor?: VenueUncheckedCreateNestedOneWithoutPrimaryPhotoInput
+  }
+
+  export type VenuePhotoCreateOrConnectWithoutVenueInput = {
+    where: VenuePhotoWhereUniqueInput
+    create: XOR<VenuePhotoCreateWithoutVenueInput, VenuePhotoUncheckedCreateWithoutVenueInput>
+  }
+
+  export type VenuePhotoCreateManyVenueInputEnvelope = {
+    data: VenuePhotoCreateManyVenueInput | VenuePhotoCreateManyVenueInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type VenuePhotoCreateWithoutPrimaryForInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    venue: VenueCreateNestedOneWithoutPhotosInput
+  }
+
+  export type VenuePhotoUncheckedCreateWithoutPrimaryForInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    venueId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type VenuePhotoCreateOrConnectWithoutPrimaryForInput = {
+    where: VenuePhotoWhereUniqueInput
+    create: XOR<VenuePhotoCreateWithoutPrimaryForInput, VenuePhotoUncheckedCreateWithoutPrimaryForInput>
   }
 
   export type VenueTypeUpsertWithWhereUniqueWithoutVenuesInput = {
@@ -5189,6 +7091,66 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"VenueType"> | Date | string
   }
 
+  export type VenuePhotoUpsertWithWhereUniqueWithoutVenueInput = {
+    where: VenuePhotoWhereUniqueInput
+    update: XOR<VenuePhotoUpdateWithoutVenueInput, VenuePhotoUncheckedUpdateWithoutVenueInput>
+    create: XOR<VenuePhotoCreateWithoutVenueInput, VenuePhotoUncheckedCreateWithoutVenueInput>
+  }
+
+  export type VenuePhotoUpdateWithWhereUniqueWithoutVenueInput = {
+    where: VenuePhotoWhereUniqueInput
+    data: XOR<VenuePhotoUpdateWithoutVenueInput, VenuePhotoUncheckedUpdateWithoutVenueInput>
+  }
+
+  export type VenuePhotoUpdateManyWithWhereWithoutVenueInput = {
+    where: VenuePhotoScalarWhereInput
+    data: XOR<VenuePhotoUpdateManyMutationInput, VenuePhotoUncheckedUpdateManyWithoutVenueInput>
+  }
+
+  export type VenuePhotoScalarWhereInput = {
+    AND?: VenuePhotoScalarWhereInput | VenuePhotoScalarWhereInput[]
+    OR?: VenuePhotoScalarWhereInput[]
+    NOT?: VenuePhotoScalarWhereInput | VenuePhotoScalarWhereInput[]
+    id?: StringFilter<"VenuePhoto"> | string
+    name?: StringFilter<"VenuePhoto"> | string
+    widthPx?: IntFilter<"VenuePhoto"> | number
+    heightPx?: IntFilter<"VenuePhoto"> | number
+    venueId?: StringFilter<"VenuePhoto"> | string
+    createdAt?: DateTimeFilter<"VenuePhoto"> | Date | string
+    updatedAt?: DateTimeFilter<"VenuePhoto"> | Date | string
+  }
+
+  export type VenuePhotoUpsertWithoutPrimaryForInput = {
+    update: XOR<VenuePhotoUpdateWithoutPrimaryForInput, VenuePhotoUncheckedUpdateWithoutPrimaryForInput>
+    create: XOR<VenuePhotoCreateWithoutPrimaryForInput, VenuePhotoUncheckedCreateWithoutPrimaryForInput>
+    where?: VenuePhotoWhereInput
+  }
+
+  export type VenuePhotoUpdateToOneWithWhereWithoutPrimaryForInput = {
+    where?: VenuePhotoWhereInput
+    data: XOR<VenuePhotoUpdateWithoutPrimaryForInput, VenuePhotoUncheckedUpdateWithoutPrimaryForInput>
+  }
+
+  export type VenuePhotoUpdateWithoutPrimaryForInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    venue?: VenueUpdateOneRequiredWithoutPhotosNestedInput
+  }
+
+  export type VenuePhotoUncheckedUpdateWithoutPrimaryForInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    venueId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type VenueCreateWithoutTypesInput = {
     id?: string
     name: string
@@ -5199,6 +7161,8 @@ export namespace Prisma {
     googlePlaceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    photos?: VenuePhotoCreateNestedManyWithoutVenueInput
+    primaryPhoto?: VenuePhotoCreateNestedOneWithoutPrimaryForInput
   }
 
   export type VenueUncheckedCreateWithoutTypesInput = {
@@ -5209,8 +7173,10 @@ export namespace Prisma {
     state: string
     zip: string
     googlePlaceId: string
+    primaryPhotoId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    photos?: VenuePhotoUncheckedCreateNestedManyWithoutVenueInput
   }
 
   export type VenueCreateOrConnectWithoutTypesInput = {
@@ -5245,8 +7211,162 @@ export namespace Prisma {
     state?: StringFilter<"Venue"> | string
     zip?: StringFilter<"Venue"> | string
     googlePlaceId?: StringFilter<"Venue"> | string
+    primaryPhotoId?: StringNullableFilter<"Venue"> | string | null
     createdAt?: DateTimeFilter<"Venue"> | Date | string
     updatedAt?: DateTimeFilter<"Venue"> | Date | string
+  }
+
+  export type VenueCreateWithoutPhotosInput = {
+    id?: string
+    name: string
+    address: string
+    city: string
+    state: string
+    zip: string
+    googlePlaceId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    types?: VenueTypeCreateNestedManyWithoutVenuesInput
+    primaryPhoto?: VenuePhotoCreateNestedOneWithoutPrimaryForInput
+  }
+
+  export type VenueUncheckedCreateWithoutPhotosInput = {
+    id?: string
+    name: string
+    address: string
+    city: string
+    state: string
+    zip: string
+    googlePlaceId: string
+    primaryPhotoId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    types?: VenueTypeUncheckedCreateNestedManyWithoutVenuesInput
+  }
+
+  export type VenueCreateOrConnectWithoutPhotosInput = {
+    where: VenueWhereUniqueInput
+    create: XOR<VenueCreateWithoutPhotosInput, VenueUncheckedCreateWithoutPhotosInput>
+  }
+
+  export type VenueCreateWithoutPrimaryPhotoInput = {
+    id?: string
+    name: string
+    address: string
+    city: string
+    state: string
+    zip: string
+    googlePlaceId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    types?: VenueTypeCreateNestedManyWithoutVenuesInput
+    photos?: VenuePhotoCreateNestedManyWithoutVenueInput
+  }
+
+  export type VenueUncheckedCreateWithoutPrimaryPhotoInput = {
+    id?: string
+    name: string
+    address: string
+    city: string
+    state: string
+    zip: string
+    googlePlaceId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    types?: VenueTypeUncheckedCreateNestedManyWithoutVenuesInput
+    photos?: VenuePhotoUncheckedCreateNestedManyWithoutVenueInput
+  }
+
+  export type VenueCreateOrConnectWithoutPrimaryPhotoInput = {
+    where: VenueWhereUniqueInput
+    create: XOR<VenueCreateWithoutPrimaryPhotoInput, VenueUncheckedCreateWithoutPrimaryPhotoInput>
+  }
+
+  export type VenueUpsertWithoutPhotosInput = {
+    update: XOR<VenueUpdateWithoutPhotosInput, VenueUncheckedUpdateWithoutPhotosInput>
+    create: XOR<VenueCreateWithoutPhotosInput, VenueUncheckedCreateWithoutPhotosInput>
+    where?: VenueWhereInput
+  }
+
+  export type VenueUpdateToOneWithWhereWithoutPhotosInput = {
+    where?: VenueWhereInput
+    data: XOR<VenueUpdateWithoutPhotosInput, VenueUncheckedUpdateWithoutPhotosInput>
+  }
+
+  export type VenueUpdateWithoutPhotosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    zip?: StringFieldUpdateOperationsInput | string
+    googlePlaceId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    types?: VenueTypeUpdateManyWithoutVenuesNestedInput
+    primaryPhoto?: VenuePhotoUpdateOneWithoutPrimaryForNestedInput
+  }
+
+  export type VenueUncheckedUpdateWithoutPhotosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    zip?: StringFieldUpdateOperationsInput | string
+    googlePlaceId?: StringFieldUpdateOperationsInput | string
+    primaryPhotoId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    types?: VenueTypeUncheckedUpdateManyWithoutVenuesNestedInput
+  }
+
+  export type VenueUpsertWithoutPrimaryPhotoInput = {
+    update: XOR<VenueUpdateWithoutPrimaryPhotoInput, VenueUncheckedUpdateWithoutPrimaryPhotoInput>
+    create: XOR<VenueCreateWithoutPrimaryPhotoInput, VenueUncheckedCreateWithoutPrimaryPhotoInput>
+    where?: VenueWhereInput
+  }
+
+  export type VenueUpdateToOneWithWhereWithoutPrimaryPhotoInput = {
+    where?: VenueWhereInput
+    data: XOR<VenueUpdateWithoutPrimaryPhotoInput, VenueUncheckedUpdateWithoutPrimaryPhotoInput>
+  }
+
+  export type VenueUpdateWithoutPrimaryPhotoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    zip?: StringFieldUpdateOperationsInput | string
+    googlePlaceId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    types?: VenueTypeUpdateManyWithoutVenuesNestedInput
+    photos?: VenuePhotoUpdateManyWithoutVenueNestedInput
+  }
+
+  export type VenueUncheckedUpdateWithoutPrimaryPhotoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: StringFieldUpdateOperationsInput | string
+    city?: StringFieldUpdateOperationsInput | string
+    state?: StringFieldUpdateOperationsInput | string
+    zip?: StringFieldUpdateOperationsInput | string
+    googlePlaceId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    types?: VenueTypeUncheckedUpdateManyWithoutVenuesNestedInput
+    photos?: VenuePhotoUncheckedUpdateManyWithoutVenueNestedInput
+  }
+
+  export type VenuePhotoCreateManyVenueInput = {
+    id?: string
+    name: string
+    widthPx: number
+    heightPx: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type VenueTypeUpdateWithoutVenuesInput = {
@@ -5270,6 +7390,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type VenuePhotoUpdateWithoutVenueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    primaryFor?: VenueUpdateOneWithoutPrimaryPhotoNestedInput
+  }
+
+  export type VenuePhotoUncheckedUpdateWithoutVenueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    primaryFor?: VenueUncheckedUpdateOneWithoutPrimaryPhotoNestedInput
+  }
+
+  export type VenuePhotoUncheckedUpdateManyWithoutVenueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    widthPx?: IntFieldUpdateOperationsInput | number
+    heightPx?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type VenueUpdateWithoutTypesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -5280,6 +7429,8 @@ export namespace Prisma {
     googlePlaceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    photos?: VenuePhotoUpdateManyWithoutVenueNestedInput
+    primaryPhoto?: VenuePhotoUpdateOneWithoutPrimaryForNestedInput
   }
 
   export type VenueUncheckedUpdateWithoutTypesInput = {
@@ -5290,8 +7441,10 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     zip?: StringFieldUpdateOperationsInput | string
     googlePlaceId?: StringFieldUpdateOperationsInput | string
+    primaryPhotoId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    photos?: VenuePhotoUncheckedUpdateManyWithoutVenueNestedInput
   }
 
   export type VenueUncheckedUpdateManyWithoutTypesInput = {
@@ -5302,6 +7455,7 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     zip?: StringFieldUpdateOperationsInput | string
     googlePlaceId?: StringFieldUpdateOperationsInput | string
+    primaryPhotoId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

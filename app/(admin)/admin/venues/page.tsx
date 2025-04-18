@@ -1,11 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import { VenuesTable } from "@/components/admin/venues-table"
-import Link from "next/link"
-import prisma from "@/utils/prisma"
-
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { VenuesTable } from "@/components/admin/venues-table";
+import Link from "next/link";
+import prisma from "@/utils/prisma";
 
 async function getAllVenues() {
   try {
@@ -13,22 +11,27 @@ async function getAllVenues() {
       include: {
         types: {
           select: {
-            name: true
-          }
-        }
-      }
+            name: true,
+          },
+        },
+        primaryPhoto: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return venues;
   } catch (error) {
-    console.error('Error fetching venues:', error);
+    console.error("Error fetching venues:", error);
     throw error;
   }
 }
 
 export default async function AdminVenuesPage() {
-  const venues = await getAllVenues()
-  console.log(venues)
+  const venues = await getAllVenues();
+  console.log(venues);
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -53,5 +56,5 @@ export default async function AdminVenuesPage() {
         </CardContent>
       </Card>
     </div>
-  )
-} 
+  );
+}

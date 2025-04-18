@@ -30,6 +30,8 @@ async function createVenue(placeDetails: google.maps.places.v1.IPlace) {
             });
         }
     }
+
+    // Create venue with photos
     const venue = await prisma.venue.create({
         data: {
             address: placeDetails.formattedAddress ?? '',
@@ -40,10 +42,18 @@ async function createVenue(placeDetails: google.maps.places.v1.IPlace) {
             zip: placeDetails.postalAddress?.postalCode ?? '',
             types: {
                 connect: placeDetails.types?.map((type) => ({ name: type })) ?? []
+            },
+            photos: {
+                create: placeDetails.photos?.map(photo => ({
+                    name: photo.name ?? '',
+                    widthPx: photo.widthPx ?? 0,
+                    heightPx: photo.heightPx ?? 0
+                })) ?? []
             }
         },
         include: {
-            types: true // Include the types in the response
+            types: true,
+            photos: true
         }
     });
     return venue;
@@ -66,7 +76,7 @@ export async function GET(request: Request) {
             },
         });
         console.log(response);
-        return Response.json(response);
+        return Response.json(response[0]);
     } catch (er) {
         const err = er as Error
         return Response.json({ message: err.message });

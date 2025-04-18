@@ -135,6 +135,7 @@ exports.Prisma.VenueScalarFieldEnum = {
   state: 'state',
   zip: 'zip',
   googlePlaceId: 'googlePlaceId',
+  primaryPhotoId: 'primaryPhotoId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -142,6 +143,16 @@ exports.Prisma.VenueScalarFieldEnum = {
 exports.Prisma.VenueTypeScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VenuePhotoScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  widthPx: 'widthPx',
+  heightPx: 'heightPx',
+  venueId: 'venueId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -156,11 +167,17 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   Event: 'Event',
   Venue: 'Venue',
-  VenueType: 'VenueType'
+  VenueType: 'VenueType',
+  VenuePhoto: 'VenuePhoto'
 };
 
 /**

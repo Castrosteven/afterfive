@@ -20,16 +20,19 @@ model Event {
 }
 
 model Venue {
-  id            String      @id @default(uuid())
-  name          String
-  address       String
-  city          String
-  state         String
-  zip           String
-  googlePlaceId String
-  types         VenueType[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id             String       @id @default(uuid())
+  name           String
+  address        String
+  city           String
+  state          String
+  zip            String
+  googlePlaceId  String
+  types          VenueType[]
+  photos         VenuePhoto[]
+  primaryPhotoId String?      @unique
+  primaryPhoto   VenuePhoto?  @relation("PrimaryPhoto", fields: [primaryPhotoId], references: [id], onDelete: SetNull)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 }
 
 model VenueType {
@@ -38,4 +41,18 @@ model VenueType {
   venues    Venue[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model VenuePhoto {
+  id         String   @id @default(uuid())
+  name       String // Google Places photo reference
+  widthPx    Int
+  heightPx   Int
+  venue      Venue    @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  venueId    String
+  primaryFor Venue?   @relation("PrimaryPhoto")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([name, venueId])
 }

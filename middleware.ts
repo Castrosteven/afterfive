@@ -21,5 +21,6 @@ export const config = {
         "/dashboard/:path*",
         "/questionnaire/:path*",
         "/auth/phone",
+        "/admin/:path*",
     ],
 };
