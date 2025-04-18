@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { 
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import {
   Calendar,
   Clock,
   MapPin,
@@ -10,35 +10,38 @@ import {
   Wine,
   X,
   CalendarClock,
-  ChevronRight
-} from "lucide-react"
-import { useEffect, useState } from "react"
-import { createClient } from "@/utils/supabase/client"
-import { useRouter } from "next/navigation"
-import { User as SupabaseUser } from "@supabase/supabase-js"
+  ChevronRight,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import { User as SupabaseUser } from "@supabase/supabase-js";
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<SupabaseUser | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
-  const supabase = createClient()
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const supabase = createClient();
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const { data: { user }, error } = await supabase.auth.getUser()
-        if (error) throw error
-        setUser(user)
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
+        if (error) throw error;
+        setUser(user);
       } catch (error) {
-        console.error("Error checking auth:", error)
-        router.push("/auth/signin")
+        console.error("Error checking auth:", error);
+        router.push("/auth/signin");
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    checkAuth()
-  }, [supabase.auth, router])
+    checkAuth();
+  }, [supabase.auth, router]);
 
   if (isLoading) {
     return (
@@ -48,11 +51,11 @@ export default function DashboardPage() {
           <p className="text-foreground">Loading dashboard...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!user) {
-    return null // Will redirect in useEffect
+    return null; // Will redirect in useEffect
   }
 
   return (
@@ -63,9 +66,7 @@ export default function DashboardPage() {
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl sm:text-4xl font-bold">My Events</h1>
             <Button variant="neutral" size="lg" asChild>
-              <Link href="/questionnaire">
-                Find New Events
-              </Link>
+              <Link href="/questionnaire">Find New Events</Link>
             </Button>
           </div>
 
@@ -83,10 +84,16 @@ export default function DashboardPage() {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h2 className="text-2xl font-bold">The Loft Bar</h2>
-                      <p className="text-foreground/80">Cocktail Bar • Rooftop</p>
+                      <p className="text-foreground/80">
+                        Cocktail Bar • Rooftop
+                      </p>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="neutral" size="sm" className="text-destructive">
+                      <Button
+                        variant="neutral"
+                        size="sm"
+                        className="text-destructive"
+                      >
                         <X className="w-4 h-4 mr-2" />
                         Cancel
                       </Button>
@@ -118,7 +125,9 @@ export default function DashboardPage() {
 
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-foreground/60">Booking ID: #AF5-2024-1234</span>
+                      <span className="text-sm text-foreground/60">
+                        Booking ID: #AF5-2024-1234
+                      </span>
                     </div>
                     <Button variant="neutral" size="sm" asChild>
                       <Link href="/dashboard/event-details">
@@ -143,33 +152,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="w-full bg-secondary-background border-t-2 border-border p-4 sm:p-6">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-lg sm:text-xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1">🌆</span>
-            </div>
-            <span className="text-sm sm:text-base">© 2025 After5.nyc</span>
-          </div>
-          <div className="flex gap-2 sm:gap-4">
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/privacy">Privacy</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/terms">Terms</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/contact">Contact</Link>
-            </Button>
-          </div>
-        </div>
-      </footer>
     </div>
-  )
-} 
+  );
+}

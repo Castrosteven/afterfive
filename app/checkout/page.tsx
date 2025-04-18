@@ -1,14 +1,14 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { 
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import {
   MapPin,
   Calendar,
   Clock,
   Users,
   Wine,
   CreditCard,
-  Shield
-} from "lucide-react"
+  Shield,
+} from "lucide-react";
 
 export default function CheckoutPage() {
   return (
@@ -17,8 +17,12 @@ export default function CheckoutPage() {
       <main className="flex-1 py-8 sm:py-12">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Confirm Your Event</h1>
-            <p className="text-lg text-foreground/80">Review your event details and complete your booking</p>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4">
+              Confirm Your Event
+            </h1>
+            <p className="text-lg text-foreground/80">
+              Review your event details and complete your booking
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -36,7 +40,9 @@ export default function CheckoutPage() {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold">The Loft Bar</h3>
-                      <p className="text-foreground/80">Cocktail Bar • Rooftop</p>
+                      <p className="text-foreground/80">
+                        Cocktail Bar • Rooftop
+                      </p>
                       <div className="flex items-center gap-2 mt-2">
                         <MapPin className="w-4 h-4" />
                         <span>Lower East Side</span>
@@ -63,8 +69,12 @@ export default function CheckoutPage() {
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-xl font-bold">Tech & Creative Professionals</h3>
-                    <p className="text-foreground/80">4 people • Similar interests</p>
+                    <h3 className="text-xl font-bold">
+                      Tech & Creative Professionals
+                    </h3>
+                    <p className="text-foreground/80">
+                      4 people • Similar interests
+                    </p>
                     <div className="flex items-center gap-2 mt-2">
                       <span>👥 26-30 years old</span>
                     </div>
@@ -72,9 +82,15 @@ export default function CheckoutPage() {
                   <div>
                     <h4 className="font-bold mb-2">Common Interests:</h4>
                     <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Tech</span>
-                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Art</span>
-                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Travel</span>
+                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">
+                        Tech
+                      </span>
+                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">
+                        Art
+                      </span>
+                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">
+                        Travel
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -117,10 +133,20 @@ export default function CheckoutPage() {
                     <span className="font-medium">Credit Card</span>
                   </div>
                   <div className="flex items-center gap-4 p-4 border-2 border-border rounded-lg cursor-pointer hover:bg-main/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                     </svg>
                     <span className="font-medium">Apple Pay</span>
                   </div>
@@ -130,47 +156,16 @@ export default function CheckoutPage() {
               {/* Action Buttons */}
               <div className="flex flex-col gap-4">
                 <Button size="lg" className="w-full" asChild>
-                  <Link href="/dashboard">
-                    Complete Booking
-                  </Link>
+                  <Link href="/dashboard">Complete Booking</Link>
                 </Button>
                 <Button variant="neutral" size="lg" className="w-full" asChild>
-                  <Link href="/questionnaire/results">
-                    Back to Results
-                  </Link>
+                  <Link href="/questionnaire/results">Back to Results</Link>
                 </Button>
               </div>
             </div>
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="w-full bg-secondary-background border-t-2 border-border p-4 sm:p-6">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-lg sm:text-xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1">🌆</span>
-            </div>
-            <span className="text-sm sm:text-base">© 2025 After5.nyc</span>
-          </div>
-          <div className="flex gap-2 sm:gap-4">
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/privacy">Privacy</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/terms">Terms</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/contact">Contact</Link>
-            </Button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
-} 
+}

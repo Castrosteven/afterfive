@@ -157,6 +157,44 @@ exports.Prisma.VenuePhotoScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.GroupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  venue: 'venue',
+  dateTime: 'dateTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.GroupMemberScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  supabaseId: 'supabaseId'
+};
+
+exports.Prisma.QuestionnaireResponseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  ageRange: 'ageRange',
+  industry: 'industry',
+  preferredTime: 'preferredTime',
+  venueTypes: 'venueTypes',
+  preferredDays: 'preferredDays',
+  topics: 'topics',
+  preferredAreas: 'preferredAreas',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -177,7 +215,11 @@ exports.Prisma.ModelName = {
   Event: 'Event',
   Venue: 'Venue',
   VenueType: 'VenueType',
-  VenuePhoto: 'VenuePhoto'
+  VenuePhoto: 'VenuePhoto',
+  Group: 'Group',
+  GroupMember: 'GroupMember',
+  User: 'User',
+  QuestionnaireResponse: 'QuestionnaireResponse'
 };
 
 /**

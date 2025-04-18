@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { 
+import { Button } from "@/components/ui/button";
+import {
   Calendar,
   Clock,
   MapPin,
@@ -17,12 +16,12 @@ import {
   Globe,
   Mail,
   Receipt,
-  ArrowLeft
-} from "lucide-react"
-import { useRouter } from "next/navigation"
+  ArrowLeft,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function EventDetailsPage() {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
@@ -31,8 +30,8 @@ export default function EventDetailsPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Back Button */}
           <div className="mb-8">
-            <Button 
-              variant="neutral" 
+            <Button
+              variant="neutral"
               className="border-2 border-border shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
               onClick={() => router.back()}
             >
@@ -45,7 +44,9 @@ export default function EventDetailsPage() {
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold">The Loft Bar</h1>
-              <p className="text-lg text-foreground/80">Cocktail Bar • Rooftop</p>
+              <p className="text-lg text-foreground/80">
+                Cocktail Bar • Rooftop
+              </p>
             </div>
             <div className="flex gap-2">
               <Button variant="neutral" size="sm" className="text-destructive">
@@ -107,16 +108,29 @@ export default function EventDetailsPage() {
                 <h2 className="text-2xl font-bold mb-6">Group Details</h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-xl font-bold mb-2">Tech & Creative Professionals</h3>
-                    <p className="text-foreground/80">A group of like-minded professionals interested in tech, art, and networking</p>
+                    <h3 className="text-xl font-bold mb-2">
+                      Tech & Creative Professionals
+                    </h3>
+                    <p className="text-foreground/80">
+                      A group of like-minded professionals interested in tech,
+                      art, and networking
+                    </p>
                   </div>
                   <div>
                     <h4 className="font-bold mb-2">Common Interests:</h4>
                     <div className="flex flex-wrap gap-2">
-                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Tech</span>
-                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Art</span>
-                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Travel</span>
-                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">Networking</span>
+                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">
+                        Tech
+                      </span>
+                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">
+                        Art
+                      </span>
+                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">
+                        Travel
+                      </span>
+                      <span className="px-3 py-1 bg-main/10 rounded-full text-sm">
+                        Networking
+                      </span>
                     </div>
                   </div>
                   <div>
@@ -140,11 +154,15 @@ export default function EventDetailsPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <Globe className="w-6 h-6" />
-                    <a href="#" className="text-main hover:underline">www.theloftbar.com</a>
+                    <a href="#" className="text-main hover:underline">
+                      www.theloftbar.com
+                    </a>
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail className="w-6 h-6" />
-                    <a href="#" className="text-main hover:underline">info@theloftbar.com</a>
+                    <a href="#" className="text-main hover:underline">
+                      info@theloftbar.com
+                    </a>
                   </div>
                 </div>
               </section>
@@ -181,15 +199,27 @@ export default function EventDetailsPage() {
               <section className="bg-secondary-background p-6 rounded-lg border-2 border-border">
                 <h2 className="text-2xl font-bold mb-6">Quick Actions</h2>
                 <div className="space-y-3">
-                  <Button variant="neutral" className="w-full justify-start" size="lg">
+                  <Button
+                    variant="neutral"
+                    className="w-full justify-start"
+                    size="lg"
+                  >
                     <MessageSquare className="w-5 h-5 mr-2" />
                     Message Group
                   </Button>
-                  <Button variant="neutral" className="w-full justify-start" size="lg">
+                  <Button
+                    variant="neutral"
+                    className="w-full justify-start"
+                    size="lg"
+                  >
                     <Share2 className="w-5 h-5 mr-2" />
                     Share Event
                   </Button>
-                  <Button variant="neutral" className="w-full justify-start" size="lg">
+                  <Button
+                    variant="neutral"
+                    className="w-full justify-start"
+                    size="lg"
+                  >
                     <Receipt className="w-5 h-5 mr-2" />
                     View Receipt
                   </Button>
@@ -199,33 +229,6 @@ export default function EventDetailsPage() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="w-full bg-secondary-background border-t-2 border-border p-4 sm:p-6">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-main to-main/80 bg-clip-text text-transparent">
-                After5
-              </span>
-              <span className="text-lg sm:text-xl font-bold text-foreground">.nyc</span>
-              <span className="ml-1">🌆</span>
-            </div>
-            <span className="text-sm sm:text-base">© 2025 After5.nyc</span>
-          </div>
-          <div className="flex gap-2 sm:gap-4">
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/privacy">Privacy</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/terms">Terms</Link>
-            </Button>
-            <Button variant="neutral" className="text-sm sm:text-base" asChild>
-              <Link href="/contact">Contact</Link>
-            </Button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
-} 
+}

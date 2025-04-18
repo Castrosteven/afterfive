@@ -19,9 +19,10 @@ import {
   MessageSquareMore,
 } from "lucide-react";
 import { useState } from "react";
-import { Footer } from "@/components/footer";
+import { useRouter } from "next/navigation";
 
 export default function QuestionnairePage() {
+  const router = useRouter();
   const [selections, setSelections] = useState({
     venueTypes: 0,
     preferredDays: 0,
@@ -30,9 +31,42 @@ export default function QuestionnairePage() {
   });
 
   async function handleSubmit(formData: FormData) {
-    //log field and value
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
+    // Extract form data
+    const data = {
+      age: formData.get("age"),
+      industry: formData.get("industry"),
+      preferredTime: formData.get("preferredTime"),
+      venueTypes: formData.getAll("venueTypes"),
+      preferredDays: formData.getAll("preferredDays"),
+      topics: formData.getAll("topics"),
+      preferredAreas: formData.getAll("preferredAreas"),
+    };
+
+    try {
+      const response = await fetch("/api/questionnaire", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        if (result.group) {
+          // Navigate to success page with group details
+          router.push(`/questionnaire/results`);
+        } else {
+          // Navigate to waiting page
+          router.push("/waiting");
+        }
+      } else {
+        throw new Error(result.error || "Failed to submit questionnaire");
+      }
+    } catch (error) {
+      console.error("Error submitting questionnaire:", error);
+      alert("Failed to submit questionnaire. Please try again.");
     }
   }
 
@@ -369,9 +403,6 @@ export default function QuestionnairePage() {
           </form>
         </div>
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

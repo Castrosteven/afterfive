@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/logo";
 import Link from "next/link";
@@ -10,7 +8,9 @@ export function Footer() {
       <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-2">
           <Logo />
-          <span className="text-sm sm:text-base text-foreground/60">© 2025</span>
+          <span className="text-sm sm:text-base text-foreground/60">
+            © 2025
+          </span>
         </div>
         <div className="flex gap-2 sm:gap-4">
           <Button variant="neutral" className="text-sm sm:text-base" asChild>
@@ -26,4 +26,4 @@ export function Footer() {
       </div>
     </footer>
   );
-} 
+}
